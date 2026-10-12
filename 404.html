@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página no encontrada — Santiago Arango</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/portafolio/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #07070c; --text: #f3f3f8; --muted: #9d9db3; --border: rgba(255,255,255,.1); --accent: #8b5cf6; --accent-2: #22d3ee; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; overflow: hidden; text-align: center; }
+    .blob { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; animation: drift 18s ease-in-out infinite alternate; }
+    .b1 { width: 50vmax; height: 50vmax; background: var(--accent); opacity: .22; top: -20%; left: -15%; }
+    .b2 { width: 40vmax; height: 40vmax; background: var(--accent-2); opacity: .14; bottom: -20%; right: -15%; animation-duration: 24s; }
+    @keyframes drift { to { transform: translate(6vw, 5vh) scale(1.15); } }
+    main { position: relative; max-width: 560px; }
+    .code { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(7rem, 28vw, 12rem); line-height: .9; letter-spacing: -.06em; background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .moto { display: inline-block; font-size: 2.6rem; margin: 10px 0 18px; animation: ride 3.2s ease-in-out infinite; }
+    @keyframes ride { 0% { transform: translateX(-40px); } 50% { transform: translateX(40px) rotate(-4deg); } 100% { transform: translateX(-40px); } }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 5vw, 2.2rem); letter-spacing: -.03em; margin-bottom: 10px; }
+    p { color: var(--muted); margin-bottom: 30px; line-height: 1.6; }
+    .path { font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: var(--accent-2); word-break: break-all; }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    a { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform .3s; }
+    a:hover { transform: translateY(-2px); }
+    .primary { background: linear-gradient(120deg, var(--accent), var(--accent-2)); color: #fff; }
+    .ghost { border: 1px solid var(--border); color: var(--text); background: rgba(255,255,255,.04); }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <span class="blob b1"></span><span class="blob b2"></span>
+  <main>
+    <div class="code">404</div>
+    <span class="moto" aria-hidden="true">🏍️</span>
+    <h1>Esta página salió a dar una vuelta en moto</h1>
+    <p>No encontré <span class="path" id="path"></span>. Puede que el enlace esté mal escrito o que la página ya no exista.</p>
+    <div class="actions">
+      <a class="primary" href="/portafolio/inicio/index.html">Volver al inicio →</a>
+      <a class="ghost" href="/portafolio/proyectos/index.html">Ver proyectos</a>
+    </div>
+  </main>
+  <script>document.getElementById('path').textContent = location.pathname;</script>
+</body>
+</html>
