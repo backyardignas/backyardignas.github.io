@@ -68,14 +68,85 @@
       <div class="container">
         <span class="eyebrow" data-reveal>Portafolio · 2025 — 2026</span>
         <h1 class="display" data-split>Trabajo <span class="grad">seleccionado</span></h1>
-        <p class="lead" data-reveal style="--d:.35s">Proyectos demostrativos que diseñé y construí para mostrar lo que sé hacer. Las marcas son ficticias, pero todo funciona: abre cualquiera y pruébalo en vivo.</p>
+        <p class="lead" data-reveal style="--d:.35s">Proyectos reales de mi formación en CESDE y demos que diseñé y construí para mostrar lo que sé hacer. Las demos usan marcas ficticias, pero todo funciona: ábrelas y pruébalas en vivo.</p>
       </div>
       <span class="hero-word" data-parallax="-.15" aria-hidden="true">PROYECTOS</span>
+    </section>
+
+    <!-- ============ PROYECTOS REALES ============ -->
+    <section style="padding-top:20px" id="reales">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:30px">
+          <div>
+            <span class="eyebrow" data-reveal>Hecho en CESDE</span>
+            <h2 class="title" data-split>Proyectos <span class="grad">reales</span></h2>
+          </div>
+          <p class="lead" data-reveal>Proyectos académicos con código real en mi GitHub: APIs con Spring Boot, frontends con JavaScript y una app en React conectada a Supabase.</p>
+        </div>
+
+        <article class="real-feature" data-reveal>
+          <div class="real-info">
+            <span class="real-badge">Proyecto destacado</span>
+            <h3>Sistema de inventario para tienda</h3>
+            <p>API REST para administrar los productos de una tienda y registrar sus entradas y salidas. Cada movimiento actualiza el stock automáticamente y el sistema impide vender más de lo que hay.</p>
+            <ul class="real-points">
+              <li>CRUD completo de productos y movimientos (10 endpoints)</li>
+              <li>Stock actualizado en transacciones, que se revierte al editar o eliminar un movimiento</li>
+              <li>Validaciones: nombres únicos, precios y stock no negativos, stock suficiente</li>
+              <li>Errores claros con su código HTTP (400, 404, 409) desde un manejador global</li>
+              <li>Arquitectura por capas y documentación interactiva con Swagger</li>
+            </ul>
+            <div class="tags"><span class="tag">Java 21</span><span class="tag">Spring Boot 4</span><span class="tag">Spring Data JPA</span><span class="tag">MySQL</span><span class="tag">Swagger / OpenAPI</span><span class="tag">Lombok</span></div>
+            <div class="real-actions">
+              <a href="https://github.com/backyardignas/sistema_tienda" target="_blank" rel="noopener" class="btn btn-primary" data-magnetic>Ver código en GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
+          </div>
+          <div class="api" id="api">
+            <div class="api-bar"><i></i><i></i><i></i><span>localhost:8081 · toca un endpoint</span></div>
+            <div class="api-list" id="api-list"></div>
+            <div class="api-out"><span class="status ok" id="api-status">200 OK</span><pre id="api-pre"></pre>
+              <p class="api-note">Respuestas de ejemplo basadas en las reglas del código.</p></div>
+          </div>
+        </article>
+
+        <div class="real-grid" data-stagger>
+          <a class="card spot real-card" href="https://github.com/backyardignas/Integrador-Backend-II" target="_blank" rel="noopener" data-cursor-text="Código">
+            <span class="ico">🎓</span>
+            <h3>API de gestión académica</h3>
+            <p>Backend para una institución educativa: usuarios, roles, estudiantes, docentes, programas, materias, grupos, periodos, matrículas y notas.</p>
+            <div class="tags"><span class="tag">Java 17</span><span class="tag">Spring Boot</span><span class="tag">JPA</span><span class="tag">MySQL</span></div>
+            <span class="meta">13 entidades · 12 controladores · 58 endpoints</span>
+            <span class="link">Ver código ↗</span>
+          </a>
+          <a class="card spot real-card" href="https://github.com/backyardignas/proyecto-integrador-frontend" target="_blank" rel="noopener" data-cursor-text="Código">
+            <span class="ico">🏫</span>
+            <h3>UniOriente · portal académico</h3>
+            <p>Sitio con inicio de sesión, registro de profesores y estudiantes, cálculo automático de notas (30/30/40) y estado aprobado o reprobado.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">LocalStorage</span></div>
+            <span class="meta">7 páginas · mockup de diseño incluido</span>
+            <span class="link">Ver código ↗</span>
+          </a>
+          <a class="card spot real-card" href="https://github.com/backyardignas/Trabajo_FrontendII" target="_blank" rel="noopener" data-cursor-text="Código">
+            <span class="ico">⚛️</span>
+            <h3>Panel académico en React</h3>
+            <p>Aplicación con panel, estudiantes, cursos y matrículas conectada a una base de datos en Supabase, con rutas y componentes reutilizables.</p>
+            <div class="tags"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">React Router</span><span class="tag">Supabase</span></div>
+            <span class="meta">SPA · CRUD conectado a base de datos</span>
+            <span class="link">Ver código ↗</span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- ============ LISTADO ============ -->
     <section style="padding-top:20px">
       <div class="container">
+        <div class="section-head" style="margin-bottom:30px">
+          <div>
+            <span class="eyebrow" data-reveal>Para probar en vivo</span>
+            <h2 class="title" data-split>Proyectos <span class="grad">demo</span></h2>
+          </div>
+        </div>
         <div class="toolbar" data-reveal>
           <div class="seg" id="filters" role="tablist" aria-label="Filtrar por categoría">
             <button class="seg-btn active" data-value="all" role="tab" aria-selected="true">Todos</button>
@@ -297,6 +368,33 @@
     });
 
     $$('[data-placeholder]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.placeholder); }));
+
+
+    /* Consola de la API de inventario: respuestas de ejemplo según las reglas del código */
+    const EPS = [
+      ['get', '/api/productos', 'Listar productos', '200 OK', 'ok', '', [{ id: 1, nombre: 'Arroz 1kg', descripcion: 'Bolsa de arroz blanco', precio: 4500.0, stock: 30 }, { id: 2, nombre: 'Café 500g', descripcion: 'Café molido', precio: 12800.0, stock: 12 }]],
+      ['post', '/api/productos', 'Crear producto (nombre repetido)', '409 Conflict', 'warn', { nombre: 'Arroz 1kg', precio: 4500, stock: 10 }, { mensaje: "Ya existe un producto con el nombre 'Arroz 1kg'" }],
+      ['post', '/api/movimientos', 'Registrar entrada', '201 Created', 'ok', { producto: { id: 1 }, cantidad: 20, tipo: 'ENTRADA' }, { id: 7, producto: { id: 1, nombre: 'Arroz 1kg', stock: 50 }, cantidad: 20, tipo: 'ENTRADA' }],
+      ['post', '/api/movimientos', 'Registrar salida sin stock', '400 Bad Request', 'err', { producto: { id: 2 }, cantidad: 50, tipo: 'SALIDA' }, { mensaje: "Stock insuficiente para el producto 'Café 500g'. Disponible: 12, solicitado: 50" }],
+      ['get', '/api/productos/99', 'Buscar producto que no existe', '404 Not Found', 'err', '', { mensaje: 'No existe un producto con id 99' }],
+      ['delete', '/api/productos/1', 'Eliminar producto con movimientos', '409 Conflict', 'warn', '', { mensaje: 'No se puede eliminar porque tiene movimientos asociados' }]
+    ];
+    const pretty = obj => JSON.stringify(obj, null, 2)
+      .replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))
+      .replace(/"([^"]+)":/g, '<span class="k">"$1"</span>:')
+      .replace(/: "([^"]*)"/g, ': <span class="s">"$1"</span>')
+      .replace(/: (-?\d+(\.\d+)?)/g, ': <span class="n">$1</span>');
+    const apiList = $('#api-list');
+    apiList.innerHTML = EPS.map(([v, path, label], i) => `<button type="button" class="api-ep" data-i="${i}"><span class="verb ${v}">${v.toUpperCase()}</span><span>${path}<small>${label}</small></span></button>`).join('');
+    const showEp = i => {
+      const [v, path, , status, kind, body, res] = EPS[i];
+      $$('.api-ep', apiList).forEach((b, k) => b.classList.toggle('on', k === i));
+      $('#api-status').className = 'status ' + kind;
+      $('#api-status').textContent = status;
+      $('#api-pre').innerHTML = (body ? `<span style="color:#77778f">// ${v.toUpperCase()} ${path}\n// cuerpo enviado:</span>\n${pretty(body)}\n<span style="color:#77778f">// respuesta:</span>\n` : '') + pretty(res);
+    };
+    apiList.addEventListener('click', e => { const b = e.target.closest('.api-ep'); if (b) showEp(+b.dataset.i); });
+    showEp(3);
 
     /* Abre directamente un proyecto si llega con #id (desde Inicio) */
     const hash = decodeURIComponent(location.hash.slice(1));
