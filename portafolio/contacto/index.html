@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contacto — Santiago Arango</title>
-  <meta name="description" content="Cuéntame sobre tu proyecto. Respondo en menos de 24 horas.">
+  <meta name="description" content="Escríbeme por ofertas de empleo remoto, prácticas o proyectos freelance. Disponible para empezar ya.">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <meta name="theme-color" content="#07070c">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Santiago Arango · Portafolio">
   <meta property="og:locale" content="es_CO">
   <meta property="og:title" content="Contacto — Santiago Arango">
-  <meta property="og:description" content="Cuéntame sobre tu proyecto. Respondo en menos de 24 horas.">
+  <meta property="og:description" content="Escríbeme por ofertas de empleo remoto, prácticas o proyectos freelance. Disponible para empezar ya.">
   <meta property="og:url" content="https://backyardignas.github.io/portafolio/contacto/index.html">
   <meta property="og:image" content="https://backyardignas.github.io/portafolio/assets/img/og.png">
   <meta property="og:image:width" content="1200">
@@ -65,9 +65,9 @@
     <!-- ============ HERO ============ -->
     <section class="page-hero grid-bg" style="padding-bottom:60px">
       <div class="container">
-        <span class="badge" data-reveal><span class="pulse"></span>Respondo en menos de 24 horas</span>
-        <h1 class="display" data-split>Hablemos de tu <span class="grad">próximo proyecto</span></h1>
-        <p class="lead" data-reveal style="--d:.35s">Cuéntame qué tienes en mente: una web, una app, un rediseño o solo una idea suelta. Te respondo con preguntas, ideas y una propuesta clara.</p>
+        <span class="badge" data-reveal><span class="pulse"></span>Disponible ya · empleo remoto y freelance</span>
+        <h1 class="display" data-split>Hablemos de <span class="grad">trabajar juntos</span></h1>
+        <p class="lead" data-reveal style="--d:.35s">Busco mi primer empleo como desarrollador, en remoto y desde ya, y también tomo proyectos freelance. Si tienes una vacante, unas prácticas o una idea para tu negocio, escríbeme.</p>
       </div>
       <span class="hero-word" data-parallax="-.15" aria-hidden="true">HOLA</span>
     </section>
@@ -99,7 +99,7 @@
 
         <div class="form-card" data-reveal="right">
           <form id="form" novalidate>
-            <h2>Cuéntame tu idea</h2>
+            <h2>Escríbeme</h2>
             <p class="muted" style="margin-bottom:34px">Todos los campos con * son obligatorios.</p>
 
             <div class="field-row">
@@ -115,27 +115,41 @@
               </div>
             </div>
 
-            <span class="form-label">¿Qué necesitas?</span>
-            <div class="chips" role="radiogroup" aria-label="Tipo de proyecto">
-              <label class="chip"><input type="radio" name="type" value="Sitio web" checked><span>Sitio web</span></label>
-              <label class="chip"><input type="radio" name="type" value="Web app"><span>Web app</span></label>
-              <label class="chip"><input type="radio" name="type" value="App móvil"><span>App móvil</span></label>
-              <label class="chip"><input type="radio" name="type" value="E-commerce"><span>E-commerce</span></label>
-              <label class="chip"><input type="radio" name="type" value="UI/UX"><span>Diseño UI/UX</span></label>
+            <span class="form-label">¿Por qué me escribes?</span>
+            <div class="chips" role="radiogroup" aria-label="Motivo del mensaje">
+              <label class="chip"><input type="radio" name="type" value="Oferta de empleo" checked><span>Oferta de empleo</span></label>
+              <label class="chip"><input type="radio" name="type" value="Prácticas"><span>Prácticas</span></label>
+              <label class="chip"><input type="radio" name="type" value="Proyecto freelance"><span>Proyecto freelance</span></label>
               <label class="chip"><input type="radio" name="type" value="Otro"><span>Otro</span></label>
             </div>
 
-            <div class="range-wrap">
-              <div class="range-head"><label class="form-label" for="budget" style="margin:0">Presupuesto aproximado</label><span class="range-value grad" id="budget-out">US$ 5.000</span></div>
-              <input type="range" id="budget" name="budget" min="1000" max="30000" step="500" value="5000">
-              <div class="range-scale"><span>US$ 1k</span><span>US$ 15k</span><span>US$ 30k+</span></div>
+            <div class="field-row fade-swap" id="job-fields">
+              <div class="field">
+                <input id="company" name="company" type="text" placeholder=" " autocomplete="organization">
+                <label for="company">Empresa (opcional)</label>
+              </div>
+              <div class="field">
+                <input id="role" name="role" type="text" placeholder=" ">
+                <label for="role">Cargo o vacante (opcional)</label>
+              </div>
+            </div>
+
+            <div class="fade-swap" id="freelance-fields" hidden>
+              <span class="form-label">¿Qué tipo de proyecto?</span>
+              <div class="chips" role="radiogroup" aria-label="Tipo de proyecto">
+                <label class="chip"><input type="radio" name="ptype" value="Landing page" checked><span>Landing page</span></label>
+                <label class="chip"><input type="radio" name="ptype" value="Sitio web"><span>Sitio web</span></label>
+                <label class="chip"><input type="radio" name="ptype" value="Tienda online"><span>Tienda online</span></label>
+                <label class="chip"><input type="radio" name="ptype" value="Web app"><span>Web app</span></label>
+                <label class="chip"><input type="radio" name="ptype" value="Otro"><span>Otro</span></label>
+              </div>
             </div>
 
             <div class="field">
               <textarea id="msg" name="message" placeholder=" " maxlength="800" required></textarea>
-              <label for="msg">Cuéntame sobre el proyecto *</label>
+              <label for="msg">Tu mensaje *</label>
               <span class="field-counter"><span id="msg-count">0</span>/800</span>
-              <p class="field-msg">Escribe al menos 20 caracteres para entender mejor tu idea.</p>
+              <p class="field-msg">Escribe al menos 20 caracteres para entender mejor lo que buscas.</p>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block" id="submit" data-magnetic=".08">
@@ -149,7 +163,7 @@
           <div class="form-success" id="success" hidden>
             <svg class="check-anim" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"/><path d="M30 52l13 13 27-29"/></svg>
             <h3>¡Mensaje enviado, <span id="success-name" class="grad"></span>!</h3>
-            <p>Se abrió tu app de correo con el mensaje listo: solo dale enviar. Te responderé en menos de 24 horas.</p>
+            <p>Se abrió tu app de correo con el mensaje listo: solo dale enviar. Te responderé lo antes posible.</p>
             <button class="btn btn-ghost" id="again">Enviar otro mensaje</button>
           </div>
         </div>
@@ -165,24 +179,24 @@
         </div>
         <div class="faq" data-stagger>
           <div class="faq-item open">
-            <button class="faq-q" aria-expanded="true">¿Cuánto tarda un proyecto típico?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-a"><div><p>Un sitio web suele tomar entre 4 y 6 semanas; una web app o app móvil, entre 8 y 14. En la primera llamada definimos un cronograma con entregas semanales.</p></div></div>
+            <button class="faq-q" aria-expanded="true">¿Puedes empezar ya?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-a"><div><p>Sí. Estoy terminando mi último semestre de Desarrollo de Software y Análisis de Datos en CESDE y puedo empezar de inmediato, organizando mis tiempos de estudio.</p></div></div>
           </div>
           <div class="faq-item">
-            <button class="faq-q" aria-expanded="false">¿Trabajas con equipos o solo de forma independiente?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-a"><div><p>Ambas. Puedo encargarme del proyecto completo o integrarme a tu equipo de producto, diseño o desarrollo con las herramientas que ya usan.</p></div></div>
+            <button class="faq-q" aria-expanded="false">¿Trabajas presencial o remoto?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-a"><div><p>Remoto. Vivo en El Carmen de Viboral (Antioquia) y trabajo a distancia con Git, GitHub y comunicación constante con el equipo.</p></div></div>
           </div>
           <div class="faq-item">
-            <button class="faq-q" aria-expanded="false">¿Cómo son los pagos?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-a"><div><p>Normalmente 40% al iniciar, 30% a mitad del proyecto y 30% en la entrega. Para proyectos largos también trabajo con pagos mensuales.</p></div></div>
+            <button class="faq-q" aria-expanded="false">¿Qué tipo de rol buscas?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-a"><div><p>Mi primer empleo como desarrollador frontend, junior o practicante. También puedo apoyar en backend y bases de datos con Node.js, Supabase y SQL.</p></div></div>
           </div>
           <div class="faq-item">
-            <button class="faq-q" aria-expanded="false">¿Qué pasa después del lanzamiento?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-a"><div><p>Incluyo 30 días de soporte para ajustes y correcciones. Después podemos acordar un plan de mantenimiento o nuevas fases del producto.</p></div></div>
+            <button class="faq-q" aria-expanded="false">¿Haces proyectos freelance?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-a"><div><p>Sí: landing pages, sitios web, tiendas online y aplicaciones web. Cuéntame tu idea y te respondo con una propuesta de alcance, tiempos y valor.</p></div></div>
           </div>
           <div class="faq-item">
-            <button class="faq-q" aria-expanded="false">¿Puedes trabajar sobre un diseño que ya tengo?<span class="faq-icon" aria-hidden="true"></span></button>
-            <div class="faq-a"><div><p>Claro. Puedo desarrollar a partir de tus diseños en Figma, o revisarlos primero y proponerte mejoras de usabilidad antes de construir.</p></div></div>
+            <button class="faq-q" aria-expanded="false">¿Tienes experiencia real?<span class="faq-icon" aria-hidden="true"></span></button>
+            <div class="faq-a"><div><p>Sí. En mis prácticas en ECAR Rionegro trabajo en el frontend de un sistema de seguridad por huella dactilar, con control de acceso a las máquinas e historial de fallas y mantenimientos. Además, en este portafolio puedes probar 8 proyectos demo.</p></div></div>
           </div>
         </div>
       </div>
@@ -232,15 +246,16 @@
     const tick = () => { clock.textContent = new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); };
     tick(); setInterval(tick, 1000);
 
-    /* Presupuesto */
-    const range = $('#budget'), out = $('#budget-out');
-    const updateRange = () => {
-      const v = +range.value;
-      const p = (v - range.min) / (range.max - range.min) * 100;
-      range.style.setProperty('--p', p + '%');
-      out.textContent = 'US$ ' + v.toLocaleString('es-ES', { useGrouping: true }) + (v >= +range.max ? '+' : '');
+    /* Campos según el motivo del mensaje */
+    const jobFields = $('#job-fields'), freeFields = $('#freelance-fields');
+    const motive = () => ($('input[name="type"]:checked') || {}).value || 'Otro';
+    const updateMotive = () => {
+      const m = motive();
+      jobFields.hidden = !(m === 'Oferta de empleo' || m === 'Prácticas');
+      freeFields.hidden = m !== 'Proyecto freelance';
     };
-    range.addEventListener('input', updateRange); updateRange();
+    $$('input[name="type"]').forEach(r => r.addEventListener('change', updateMotive));
+    updateMotive();
 
     /* Contador de caracteres */
     const msg = $('#msg'), msgCount = $('#msg-count');
@@ -283,16 +298,22 @@
         submit.classList.remove('loading');
         submit.disabled = false;
         $('#success-name').textContent = $('#name').value.trim().split(' ')[0];
-        const type = (form.querySelector('input[name="type"]:checked') || {}).value || 'Proyecto';
-        const body = `Hola Santiago,\n\n${$('#msg').value.trim()}\n\nTipo de proyecto: ${type}\nPresupuesto aproximado: ${$('#budget-out').textContent}\n\n${$('#name').value.trim()}\n${$('#mail').value.trim()}`;
-        window.location.href = `mailto:${email}?subject=${encodeURIComponent('Nuevo proyecto: ' + type)}&body=${encodeURIComponent(body)}`;
+        const m = motive(), company = $('#company').value.trim(), role = $('#role').value.trim();
+        const ptype = ($('input[name="ptype"]:checked') || {}).value || '';
+        const details = [`Motivo: ${m}`];
+        if (!jobFields.hidden && company) details.push(`Empresa: ${company}`);
+        if (!jobFields.hidden && role) details.push(`Cargo: ${role}`);
+        if (!freeFields.hidden) details.push(`Tipo de proyecto: ${ptype}`);
+        const subject = m === 'Proyecto freelance' ? `Proyecto freelance: ${ptype}` : `${m}${company ? ' — ' + company : ''}`;
+        const body = `Hola Santiago,\n\n${$('#msg').value.trim()}\n\n${details.join('\n')}\n\n${$('#name').value.trim()}\n${$('#mail').value.trim()}`;
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         form.hidden = true;
         success.hidden = false;
         confetti();
       }, 900);
     });
     $('#again').addEventListener('click', () => {
-      form.reset(); updateRange(); msgCount.textContent = '0';
+      form.reset(); updateMotive(); msgCount.textContent = '0';
       $$('.field', form).forEach(f => f.classList.remove('error'));
       success.hidden = true; form.hidden = false;
     });
