@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Órbita Learn — Aprende a tu ritmo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f6ff;--card:#fff;--ink:#0b1b3a;--muted:#5d6b89;--blue:#2563eb;--cyan:#06b6d4;--line:#e1e8f5;--green:#10b981;--gold:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input{font:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .in{width:min(1240px,100% - 32px);margin:auto;display:flex;align-items:center;gap:16px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;cursor:pointer}
+.logo i{width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--blue),var(--cyan),var(--blue));position:relative}
+.logo i::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}
+.chip{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--bg);font-size:14px;font-weight:600}
+.chip.xp{margin-left:auto;color:var(--blue)}
+.chip.fire{color:#ea580c}
+.bump{animation:bump .6s}
+@keyframes bump{40%{transform:scale(1.25)}}
+.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;display:grid;place-items:center;font-weight:600}
+main{width:min(1240px,100% - 32px);margin:auto;padding:30px 0 100px}
+.view{display:none;animation:fade .5s cubic-bezier(.16,1,.3,1)}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}}
+.welcome{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-bottom:30px}
+.continue{border-radius:28px;padding:32px;background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;position:relative;overflow:hidden}
+.continue::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;border:30px solid rgba(255,255,255,.08)}
+.continue small{opacity:.8}
+.continue h2{font-size:28px;margin:6px 0 14px;line-height:1.2}
+.pbar{height:10px;border-radius:999px;background:rgba(255,255,255,.2);overflow:hidden;margin:10px 0 18px}
+.pbar i{display:block;height:100%;background:#fff;border-radius:inherit;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:14px;background:#fff;color:var(--blue);font-weight:600;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.green{background:var(--green);color:#fff}
+.badges-card{border-radius:28px;padding:26px;background:var(--card);border:1px solid var(--line)}
+.badges-card h3{font-size:17px;margin-bottom:14px}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bdg{text-align:center;padding:12px 6px;border-radius:18px;background:var(--bg);font-size:12px;color:var(--muted);transition:.4s}
+.bdg span{display:block;font-size:30px;filter:grayscale(1);opacity:.35;transition:.4s}
+.bdg.got{background:#fff7e6;color:var(--ink)}
+.bdg.got span{filter:none;opacity:1}
+.head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.head h2{font-size:26px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{padding:8px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:500}
+.filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);outline:none;min-width:220px}
+.courses{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.course{border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;text-align:left}
+.course:hover{transform:translateY(-6px);box-shadow:0 20px 40px -20px rgba(37,99,235,.4)}
+.c-art{height:130px;display:grid;place-items:center;font-size:52px;position:relative}
+.c-lvl{position:absolute;top:12px;left:12px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.85)}
+.c-body{padding:18px}
+.c-body h3{font-size:17px;line-height:1.3;margin-bottom:6px}
+.c-body small{color:var(--muted)}
+.c-prog{height:6px;border-radius:999px;background:var(--line);margin-top:14px;overflow:hidden}
+.c-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.c-foot{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+.course-layout{display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start}
+.outline{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;position:sticky;top:90px;max-height:calc(100vh - 110px);overflow-y:auto}
+.outline h3{font-size:16px;margin-bottom:4px}
+.outline .pbar{background:var(--line);height:8px;margin:10px 0 16px}
+.outline .pbar i{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.mod{margin-bottom:14px}
+.mod b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.les{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;font-size:14px;text-align:left;transition:background .2s}
+.les:hover{background:var(--bg)}
+.les.cur{background:#e8efff;color:var(--blue);font-weight:600}
+.les .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;flex-shrink:0;transition:.3s}
+.les.done .ck{background:var(--green);border-color:var(--green);color:#fff}
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.player{aspect-ratio:16/8;background:linear-gradient(135deg,#0b1b3a,#1e3a8a);display:grid;place-items:center;position:relative;color:#fff}
+.player .pl{width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:grid;place-items:center;font-size:26px;transition:transform .25s}
+.player .pl:hover{transform:scale(1.1)}
+.player .code{position:absolute;left:30px;top:26px;font-family:ui-monospace,monospace;font-size:14px;opacity:.5;line-height:1.7}
+.vbar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.15)}
+.vbar i{display:block;height:100%;width:0;background:var(--cyan)}
+.l-body{padding:30px}
+.l-body small{color:var(--blue);font-weight:600}
+.l-body h2{font-size:28px;margin:6px 0 14px}
+.l-body p{color:var(--muted);line-height:1.8;margin-bottom:14px;max-width:70ch}
+.tip-box{background:#ecfeff;border-left:4px solid var(--cyan);padding:14px 18px;border-radius:12px;margin:18px 0;color:#155e75;font-size:15px}
+.l-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.q{margin-bottom:22px}
+.q b{display:block;margin-bottom:10px}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;padding:13px 16px;border-radius:14px;border:2px solid var(--line);transition:.2s;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--blue)}
+.opts button.right{border-color:var(--green);background:#ecfdf5}
+.opts button.wrong{border-color:#ef4444;background:#fef2f2}
+.opts button:disabled{cursor:default}
+.score{text-align:center;padding:20px;border-radius:18px;background:var(--bg);margin-top:10px}
+.score b{font-size:40px;color:var(--blue)}
+.toast{position:fixed;right:20px;bottom:20px;display:flex;align-items:center;gap:12px;background:var(--ink);color:#fff;padding:14px 18px;border-radius:16px;z-index:50;transform:translateY(150%);transition:transform .5s cubic-bezier(.16,1,.3,1);max-width:calc(100% - 40px)}
+.toast.on{transform:none}
+.toast span{font-size:28px}
+.back-link{display:inline-flex;gap:6px;color:var(--muted);font-weight:500;margin-bottom:18px}
+@media(max-width:1000px){.courses{grid-template-columns:1fr 1fr}.welcome,.course-layout{grid-template-columns:1fr}.outline{position:static;max-height:none}}
+@media(max-width:560px){.courses{grid-template-columns:1fr}.chip.fire{display:none}.continue h2{font-size:22px}.l-body{padding:20px}}
+.demo-back{position:fixed;left:16px;bottom:16px;z-index:9999;padding:10px 16px;border-radius:999px;background:rgba(10,10,20,.85);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);box-shadow:0 8px 24px rgba(0,0,0,.3)}.demo-back:hover{background:#000}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div class="logo" id="home"><i></i>Órbita</div>
+  <span class="chip xp" id="xp">⚡ 0 XP</span>
+  <span class="chip fire">🔥 3 días</span>
+  <span class="av">SA</span>
+</div></header>
+
+<main>
+  <section class="view on" id="v-home">
+    <div class="welcome">
+      <div class="continue" id="continue"></div>
+      <div class="badges-card"><h3>Tus logros</h3><div class="badges" id="badges"></div></div>
+    </div>
+    <div class="head">
+      <h2>Explora cursos</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div class="filters" id="filters"><button class="on" data-l="all">Todos</button><button data-l="Básico">Básico</button><button data-l="Intermedio">Intermedio</button></div>
+        <input class="search" id="search" placeholder="Buscar curso…" aria-label="Buscar curso">
+      </div>
+    </div>
+    <div class="courses" id="courses"></div>
+  </section>
+
+  <section class="view" id="v-course">
+    <button class="back-link" id="back">← Todos los cursos</button>
+    <div class="course-layout">
+      <aside class="outline" id="outline"></aside>
+      <article class="lesson" id="lesson"></article>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"><span id="t-ic">🏅</span><div><b id="t-title"></b><br><small id="t-sub"></small></div></div>
+<a class="demo-back" href="../../proyectos/index.html#orbita">← Portafolio · Proyecto demo</a>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const store = { get(k, d) { try { return JSON.parse(localStorage.getItem('orbita-' + k)) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('orbita-' + k, JSON.stringify(v)); } catch (e) {} } };
+
+const COURSES = [
+  { id: 'js', title: 'JavaScript desde cero', emoji: '🟨', bg: '#fef9c3', lvl: 'Básico', mods: [['Fundamentos', ['Variables y tipos', 'Operadores', 'Condicionales']], ['Funciones', ['Declarar funciones', 'Arrow functions', 'Ámbito y closures']]],
+    quiz: [['¿Qué palabra declara una variable que no se puede reasignar?', ['var', 'let', 'const'], 2], ['¿Qué devuelve typeof []?', ['"array"', '"object"', '"list"'], 1], ['¿Cuál es una arrow function válida?', ['const f = () => 1', 'function => 1', 'f() -> 1'], 0]] },
+  { id: 'figma', title: 'Diseño UI con Figma', emoji: '🎨', bg: '#fce7f3', lvl: 'Básico', mods: [['Primeros pasos', ['La interfaz de Figma', 'Frames y capas', 'Auto layout']], ['Sistemas', ['Componentes', 'Variantes', 'Estilos y tokens']]],
+    quiz: [['¿Qué herramienta organiza elementos en filas o columnas automáticamente?', ['Auto layout', 'Máscara', 'Pluma'], 0], ['Un componente reutilizable se crea con…', ['Ctrl + G', 'Ctrl + Alt + K', 'Ctrl + D'], 1], ['Las variantes sirven para…', ['Agrupar estados de un componente', 'Exportar PNG', 'Crear prototipos'], 0]] },
+  { id: 'react', title: 'React moderno', emoji: '⚛️', bg: '#e0f2fe', lvl: 'Intermedio', mods: [['Componentes', ['JSX', 'Props', 'Estado con useState']], ['Efectos', ['useEffect', 'Custom hooks', 'Context']]],
+    quiz: [['¿Qué hook maneja el estado local?', ['useEffect', 'useState', 'useRef'], 1], ['Las props son…', ['Mutables por el hijo', 'Datos que recibe un componente', 'Estilos CSS'], 1], ['useEffect sin dependencias se ejecuta…', ['Solo una vez', 'Después de cada render', 'Nunca'], 1]] },
+  { id: 'git', title: 'Git y GitHub', emoji: '🌿', bg: '#dcfce7', lvl: 'Intermedio', mods: [['Control de versiones', ['¿Qué es Git?', 'Commits', 'Ramas']], ['Colaboración', ['Pull requests', 'Resolver conflictos', 'Buenas prácticas']]],
+    quiz: [['¿Qué comando crea una rama nueva y cambia a ella?', ['git switch -c', 'git push', 'git log'], 0], ['Un commit es…', ['Una copia del disco', 'Una instantánea de cambios', 'Un servidor'], 1], ['Para proponer cambios en GitHub usas…', ['Issues', 'Pull requests', 'Wikis'], 1]] }
+];
+COURSES.forEach(c => c.lessons = c.mods.flatMap(([m, ls]) => ls.map(l => ({ title: l, mod: m }))).concat([{ title: 'Quiz final', mod: 'Evaluación', quiz: true }]));
+
+const BADGES = [['first', '🚀', 'Primera lección'], ['three', '📚', '3 lecciones'], ['quiz', '🧠', 'Quiz aprobado'], ['perfect', '💯', 'Quiz perfecto'], ['course', '🏆', 'Curso completo'], ['xp', '⚡', '200 XP']];
+let state = store.get('state', { done: { js: [0, 1] }, xp: 120, badges: ['first'], last: 'js' });
+let filter = { lvl: 'all', q: '' }, cur = null, lessonIdx = 0;
+
+const doneOf = id => state.done[id] || [];
+const pct = c => Math.round(doneOf(c.id).length / c.lessons.length * 100);
+const save = () => store.set('state', state);
+
+function toast(ic, title, sub) {
+  $('#t-ic').textContent = ic; $('#t-title').textContent = title; $('#t-sub').textContent = sub;
+  const t = $('#toast'); t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2800);
+}
+function addXp(n) {
+  state.xp += n; const el = $('#xp'); el.textContent = `⚡ ${state.xp} XP`; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+  if (state.xp >= 200) unlock('xp');
+}
+function unlock(id) {
+  if (state.badges.includes(id)) return;
+  state.badges.push(id); const b = BADGES.find(x => x[0] === id);
+  setTimeout(() => toast(b[1], '¡Logro desbloqueado!', b[2]), 400);
+  renderBadges();
+}
+function renderBadges() { $('#badges').innerHTML = BADGES.map(([id, e, n]) => `<div class="bdg ${state.badges.includes(id) ? 'got' : ''}"><span>${e}</span>${n}</div>`).join(''); }
+
+function renderHome() {
+  const last = COURSES.find(c => c.id === state.last) || COURSES[0];
+  $('#continue').innerHTML = `<small>Continúa donde lo dejaste</small><h2>${last.title}</h2><span>${pct(last)}% completado</span><div class="pbar"><i style="width:${pct(last)}%"></i></div><button class="btn" data-open="${last.id}">Continuar →</button>`;
+  const list = COURSES.filter(c => (filter.lvl === 'all' || c.lvl === filter.lvl) && c.title.toLowerCase().includes(filter.q));
+  $('#courses').innerHTML = list.map(c => `
+    <button class="course" data-open="${c.id}"><div class="c-art" style="background:${c.bg}"><span class="c-lvl">${c.lvl}</span>${c.emoji}</div>
+    <div class="c-body"><h3>${c.title}</h3><small>${c.lessons.length} lecciones · ${c.lessons.length * 8} min</small>
+    <div class="c-prog"><i style="width:${pct(c)}%"></i></div><div class="c-foot"><span>${pct(c) ? pct(c) + '% completado' : 'Sin empezar'}</span><span>${pct(c) === 100 ? '🏆' : ''}</span></div></div></button>`).join('') || '<p style="color:var(--muted)">No hay cursos con ese nombre.</p>';
+  $('#xp').textContent = `⚡ ${state.xp} XP`;
+  renderBadges();
+}
+document.addEventListener('click', e => { const o = e.target.closest('[data-open]'); if (o) openCourse(o.dataset.open); });
+$$('#filters button').forEach(b => b.onclick = () => { $$('#filters button').forEach(x => x.classList.toggle('on', x === b)); filter.lvl = b.dataset.l; renderHome(); });
+$('#search').oninput = e => { filter.q = e.target.value.toLowerCase(); renderHome(); };
+
+function show(v) { $$('.view').forEach(x => x.classList.toggle('on', x.id === v)); scrollTo({ top: 0, behavior: 'smooth' }); }
+$('#back').onclick = () => { renderHome(); show('v-home'); };
+$('#home').onclick = () => { renderHome(); show('v-home'); };
+
+function openCourse(id) {
+  cur = COURSES.find(c => c.id === id); state.last = id; save();
+  const d = doneOf(id); lessonIdx = cur.lessons.findIndex((_, i) => !d.includes(i)); if (lessonIdx < 0) lessonIdx = 0;
+  renderCourse(); show('v-course');
+}
+function renderOutline() {
+  const d = doneOf(cur.id);
+  let i = 0;
+  $('#outline').innerHTML = `<h3>${cur.emoji} ${cur.title}</h3><small style="color:var(--muted)">${d.length}/${cur.lessons.length} lecciones · ${pct(cur)}%</small><div class="pbar"><i style="width:${pct(cur)}%"></i></div>` +
+    [...cur.mods.map(([m, ls]) => [m, ls.length]), ['Evaluación', 1]].map(([m, n]) => `<div class="mod"><b>${m}</b>${Array.from({ length: n }, () => { const k = i++; const l = cur.lessons[k]; return `<button class="les ${d.includes(k) ? 'done' : ''} ${k === lessonIdx ? 'cur' : ''}" data-l="${k}"><span class="ck">${d.includes(k) ? '✓' : ''}</span>${l.quiz ? '📝 ' : ''}${l.title}</button>`; }).join('')}</div>`).join('');
+}
+$('#outline').onclick = e => { const b = e.target.closest('[data-l]'); if (b) { lessonIdx = +b.dataset.l; renderCourse(); } };
+
+function renderCourse() {
+  renderOutline();
+  const l = cur.lessons[lessonIdx], done = doneOf(cur.id).includes(lessonIdx);
+  if (l.quiz) return renderQuiz();
+  $('#lesson').innerHTML = `
+    <div class="player"><div class="code">// ${l.title}<br>const aprender = () =&gt; {<br>&nbsp;&nbsp;practicar();<br>}</div><button class="pl" id="play" aria-label="Reproducir">▶</button><div class="vbar"><i id="vbar"></i></div></div>
+    <div class="l-body"><small>${l.mod} · Lección ${lessonIdx + 1} de ${cur.lessons.length}</small><h2>${l.title}</h2>
+      <p>En esta lección aprenderás los conceptos clave de <b>${l.title.toLowerCase()}</b> con ejemplos prácticos y ejercicios cortos. Al terminar podrás aplicarlo directamente en tus propios proyectos.</p>
+      <div class="tip-box">💡 Consejo: pausa el video y repite cada ejemplo por tu cuenta. Aprender haciendo es la forma más rápida de recordar.</div>
+      <p>Cuando sientas que dominas el tema, marca la lección como completada para ganar XP y avanzar a la siguiente.</p>
+      <div class="l-actions"><button class="btn blue" data-prev ${lessonIdx ? '' : 'style="visibility:hidden"'}>← Anterior</button>
+      <button class="btn ${done ? 'blue' : 'green'}" id="complete">${done ? 'Siguiente lección →' : '✓ Marcar como completada · +20 XP'}</button></div></div>`;
+  $('#play').onclick = e => {
+    const bar = $('#vbar'); e.currentTarget.textContent = '❚❚'; let w = 0;
+    const t = setInterval(() => { w += 2; bar.style.width = w + '%'; if (w >= 100) { clearInterval(t); $('#play') && ($('#play').textContent = '↺'); } }, 60);
+  };
+  $('#lesson [data-prev]').onclick = () => { lessonIdx--; renderCourse(); };
+  $('#complete').onclick = () => {
+    if (!done) complete(lessonIdx, 20);
+    lessonIdx = Math.min(cur.lessons.length - 1, lessonIdx + 1); renderCourse();
+  };
+}
+function complete(i, xp) {
+  const d = state.done[cur.id] = doneOf(cur.id);
+  if (d.includes(i)) return; d.push(i); addXp(xp);
+  toast('⚡', `+${xp} XP`, cur.lessons[i].title + ' completada');
+  unlock('first');
+  if (Object.values(state.done).flat().length >= 3) unlock('three');
+  if (d.length === cur.lessons.length) unlock('course');
+  save();
+}
+function renderQuiz() {
+  let answers = [];
+  $('#lesson').innerHTML = `<div class="l-body"><small>Evaluación final</small><h2>Quiz: ${cur.title}</h2><p>Responde las 3 preguntas. Necesitas 2 correctas para aprobar.</p>
+    ${cur.quiz.map(([q, os], qi) => `<div class="q"><b>${qi + 1}. ${q}</b><div class="opts">${os.map((o, oi) => `<button data-q="${qi}" data-o="${oi}">${o}</button>`).join('')}</div></div>`).join('')}
+    <div id="score"></div></div>`;
+  $('#lesson').onclick = e => {
+    const b = e.target.closest('[data-o]'); if (!b || b.disabled) return;
+    const qi = +b.dataset.q, oi = +b.dataset.o, right = cur.quiz[qi][2];
+    $$(`#lesson [data-q="${qi}"]`).forEach(x => { x.disabled = true; if (+x.dataset.o === right) x.classList.add('right'); });
+    if (oi !== right) b.classList.add('wrong');
+    answers[qi] = oi === right;
+    if (answers.filter(a => a !== undefined).length === cur.quiz.length) {
+      const ok = answers.filter(Boolean).length, pass = ok >= 2;
+      $('#score').innerHTML = `<div class="score"><b>${ok}/${cur.quiz.length}</b><p>${pass ? '¡Aprobaste! 🎉' : 'Casi. Repasa las lecciones e inténtalo de nuevo.'}</p><button class="btn blue" id="retry" style="margin-top:10px">${pass ? 'Volver a los cursos' : 'Reintentar'}</button></div>`;
+      if (pass) { complete(lessonIdx, ok === 3 ? 60 : 40); unlock('quiz'); if (ok === 3) unlock('perfect'); renderOutline(); }
+      $('#retry').onclick = ev => { ev.stopPropagation(); if (pass) { renderHome(); show('v-home'); } else renderQuiz(); };
+    }
+  };
+}
+
+renderHome();
+</script>
+</body>
+</html>

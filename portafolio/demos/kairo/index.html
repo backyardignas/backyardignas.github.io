@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kairo Arquitectos — Espacios que respiran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f4efe7;--sand:#e8dfd1;--ink:#1c1917;--muted:#78716c;--orange:#ea580c;--line:rgba(28,25,23,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.serif{font-family:Fraunces,Georgia,serif;font-weight:300;letter-spacing:-.03em}
+.wrap{width:min(1240px,100% - 40px);margin-inline:auto}
+header{position:fixed;inset:0 0 auto;z-index:20;transition:background .4s,backdrop-filter .4s;mix-blend-mode:normal}
+header.solid{background:rgba(244,239,231,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;height:76px}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:22px;letter-spacing:.12em}
+.logo span{color:var(--orange)}
+.links{display:flex;gap:34px;font-size:14px}
+.links a{position:relative}
+.links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s}
+.links a:hover::after{transform:scaleX(1);transform-origin:left}
+.cta{padding:11px 20px;border:1px solid var(--ink);border-radius:999px;font-size:14px;transition:.3s}
+.cta:hover{background:var(--ink);color:var(--cream)}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:40px;padding:120px 0 60px}
+.hero h1{font-size:clamp(3.4rem,9vw,8.6rem);line-height:.92}
+.hero h1 em{font-style:italic;color:var(--orange)}
+.hero-meta{display:flex;justify-content:space-between;gap:30px;margin-top:40px;color:var(--muted);font-size:15px;max-width:560px}
+.hero-meta p{max-width:34ch}
+.hero-art{position:relative;height:min(70vh,640px);border-radius:300px 300px 0 0;overflow:hidden;background:var(--sand)}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+.line-in{display:block;overflow:hidden}
+.line-in>span{display:block;transform:translateY(105%);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.ready .line-in>span{transform:none}
+.ready .line-in:nth-child(2)>span{transition-delay:.1s}.ready .line-in:nth-child(3)>span{transition-delay:.2s}
+.strip{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;white-space:nowrap}
+.strip div{display:inline-flex;gap:50px;animation:mq 30s linear infinite;font-family:Fraunces,serif;font-size:28px;font-weight:300}
+.strip i{color:var(--orange);font-style:normal}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:130px 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:50px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.head h2{font-size:clamp(2.6rem,5vw,4.6rem);line-height:1;margin-top:12px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{padding:10px 18px;border-radius:999px;border:1px solid var(--line);font-size:14px;transition:.3s}
+.filters button.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.tile{position:relative;grid-column:span 4;cursor:pointer;transition:opacity .5s,transform .5s}
+.tile:nth-child(5n+1){grid-column:span 7}.tile:nth-child(5n+2){grid-column:span 5}
+.tile.hide{display:none}
+.tile .img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
+.tile:nth-child(5n+1) .img,.tile:nth-child(5n+2) .img{aspect-ratio:16/11}
+.tile svg{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.tile:hover svg{transform:scale(1.06)}
+.tile .view{position:absolute;inset:auto 18px 18px auto;width:84px;height:84px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-size:13px;font-weight:600;transform:scale(0);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.tile:hover .view{transform:scale(1)}
+.tile-info{display:flex;justify-content:space-between;align-items:baseline;padding:16px 2px;border-bottom:1px solid var(--line)}
+.tile-info h3{font-family:Fraunces,serif;font-weight:500;font-size:24px}
+.tile-info span{color:var(--muted);font-size:14px}
+.reveal{opacity:0;transform:translateY(50px);transition:opacity 1s,transform 1.2s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.studio{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.studio-art{aspect-ratio:4/5;background:var(--ink);border-radius:0 200px 0 0;overflow:hidden;position:relative}
+.studio p.big{font-family:Fraunces,serif;font-size:clamp(1.6rem,2.6vw,2.3rem);line-height:1.25;font-weight:300;margin:20px 0 40px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.nums div{padding:24px 0}
+.nums b{display:block;font-family:Fraunces,serif;font-size:52px;font-weight:300;line-height:1}
+.nums span{color:var(--muted);font-size:14px}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.step{padding:30px 24px 30px 0;border-right:1px solid var(--line);margin-right:24px;transition:.4s}
+.step:last-child{border:0}
+.step b{font-family:Fraunces,serif;font-size:60px;font-weight:300;color:var(--orange);display:block;line-height:1;margin-bottom:24px}
+.step h4{font-size:19px;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15px}
+.quote{background:var(--ink);color:var(--cream);text-align:center}
+.quote blockquote{font-family:Fraunces,serif;font-weight:300;font-size:clamp(1.8rem,4vw,3.4rem);line-height:1.2;max-width:22ch;margin:0 auto 30px}
+.quote cite{color:#a8a29e;font-style:normal}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.contact h2{font-size:clamp(3rem,7vw,6rem);line-height:.95}
+.contact h2 em{color:var(--orange)}
+form{display:grid;gap:18px}
+.f{border-bottom:1px solid var(--ink);display:grid}
+.f label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:10px}
+.f input,.f select,.f textarea{border:0;background:none;font:inherit;font-size:18px;padding:10px 0 14px;outline:none;resize:none;color:var(--ink)}
+.send{justify-self:start;padding:18px 34px;border-radius:999px;background:var(--orange);color:#fff;font-weight:600;transition:.3s}
+.send:hover{background:var(--ink)}
+.ok{font-family:Fraunces,serif;font-size:28px}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.lb{position:fixed;inset:0;z-index:50;background:var(--cream);display:grid;grid-template-columns:1.4fr 1fr;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.lb.open{opacity:1;visibility:visible}
+.lb-art{position:relative;overflow:hidden;background:var(--sand)}
+.lb-art svg{width:100%;height:100%;display:block}
+.lb-body{padding:60px 50px;display:flex;flex-direction:column;overflow-y:auto}
+.lb-body h3{font-family:Fraunces,serif;font-weight:300;font-size:56px;line-height:1;margin:14px 0 24px}
+.lb-body p{color:var(--muted);line-height:1.7;margin-bottom:30px}
+.lb-body dl{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);padding-top:24px}
+.lb-body dt{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lb-body dd{font-size:17px;margin-top:4px}
+.lb-nav{margin-top:auto;display:flex;justify-content:space-between;padding-top:40px}
+.lb-nav button{font-size:15px;border-bottom:1px solid currentColor;padding-bottom:3px}
+.lb-close{position:absolute;top:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--cream);font-size:22px;z-index:2;transition:transform .4s}
+.lb-close:hover{transform:rotate(90deg)}
+.burger{display:none;font-size:14px}
+@media(max-width:900px){.links,.nav .cta{display:none}.burger{display:block}.hero,.studio,.contact,.lb{grid-template-columns:1fr}.hero-art{height:52vh}.tile,.tile:nth-child(5n+1),.tile:nth-child(5n+2){grid-column:span 12}.process{grid-template-columns:1fr 1fr}.step:nth-child(2){border:0}.lb{overflow-y:auto}.lb-art{height:45vh}.lb-body{padding:30px 22px 90px}.lb-body h3{font-size:40px}section{padding:90px 0}}
+.mobile{position:fixed;inset:0;z-index:19;background:var(--ink);color:var(--cream);display:grid;align-content:center;gap:10px;padding:30px;transform:translateY(-100%);transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.mobile.open{transform:none}
+.mobile a{font-family:Fraunces,serif;font-size:48px;font-weight:300}
+.demo-back{position:fixed;left:16px;bottom:16px;z-index:9999;padding:10px 16px;border-radius:999px;background:rgba(10,10,20,.85);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);box-shadow:0 8px 24px rgba(0,0,0,.3)}.demo-back:hover{background:#000}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="wrap nav">
+  <a href="#" class="logo">KAIRO<span>.</span></a>
+  <nav class="links"><a href="#proyectos">Proyectos</a><a href="#estudio">Estudio</a><a href="#proceso">Proceso</a><a href="#contacto">Contacto</a></nav>
+  <a href="#contacto" class="cta">Agendar visita</a>
+  <button class="burger" id="burger">Menú</button>
+</div></header>
+<div class="mobile" id="mobile"><a href="#proyectos">Proyectos</a><a href="#estudio">Estudio</a><a href="#proceso">Proceso</a><a href="#contacto">Contacto</a></div>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Estudio de arquitectura · Desde 2012</p>
+      <h1 class="serif" style="margin-top:20px"><span class="line-in"><span>Espacios</span></span><span class="line-in"><span>que <em>respiran</em></span></span><span class="line-in"><span>contigo.</span></span></h1>
+      <div class="hero-meta"><p>Diseñamos viviendas, oficinas y espacios culturales donde la luz, la materia y el paisaje conversan.</p><p>↓ Desliza</p></div>
+    </div>
+    <div class="hero-art" id="hero-art"></div>
+  </div>
+
+  <div class="strip"><div id="strip"></div></div>
+
+  <section id="proyectos" class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">Obra seleccionada</p><h2 class="serif">Proyectos</h2></div>
+      <div class="filters" id="filters"><button class="on" data-f="all">Todos</button><button data-f="Residencial">Residencial</button><button data-f="Comercial">Comercial</button><button data-f="Cultural">Cultural</button></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="estudio" class="wrap studio">
+    <div class="studio-art reveal" id="studio-art"></div>
+    <div class="reveal">
+      <p class="eyebrow">El estudio</p>
+      <p class="big">Creemos que un buen edificio no se impone al lugar: lo escucha. Cada proyecto empieza con una caminata por el terreno y termina cuando la luz entra exactamente donde debe.</p>
+      <div class="nums"><div><b data-n="64">64</b><span>obras construidas</span></div><div><b data-n="12">12</b><span>premios</span></div><div><b data-n="18">18</b><span>arquitectos</span></div></div>
+    </div>
+  </section>
+
+  <section id="proceso" class="wrap">
+    <div class="head"><div><p class="eyebrow">Cómo trabajamos</p><h2 class="serif">Proceso</h2></div></div>
+    <div class="process">
+      <div class="step reveal"><b>01</b><h4>Escuchar</h4><p>Visitamos el terreno y entendemos cómo vives o trabajas.</p></div>
+      <div class="step reveal" style="transition-delay:.1s"><b>02</b><h4>Imaginar</h4><p>Bocetos, maquetas y recorridos virtuales para decidir juntos.</p></div>
+      <div class="step reveal" style="transition-delay:.2s"><b>03</b><h4>Detallar</h4><p>Planos técnicos, materiales y presupuesto sin sorpresas.</p></div>
+      <div class="step reveal" style="transition-delay:.3s"><b>04</b><h4>Construir</h4><p>Dirección de obra hasta entregarte las llaves.</p></div>
+    </div>
+  </section>
+
+  <section class="quote"><div class="wrap reveal">
+    <blockquote>“Entrar a la casa fue como respirar después de mucho tiempo.”</blockquote>
+    <cite>— Familia Ortega, Casa Ladera</cite>
+  </div></section>
+
+  <section id="contacto" class="wrap contact">
+    <h2 class="serif reveal">Hablemos de tu <em>espacio</em>.</h2>
+    <div class="reveal">
+      <form id="form">
+        <div class="f"><label for="n">Nombre</label><input id="n" required></div>
+        <div class="f"><label for="e">Email</label><input id="e" type="email" required></div>
+        <div class="f"><label for="t">Tipo de proyecto</label><select id="t"><option>Vivienda</option><option>Oficina</option><option>Comercial</option><option>Remodelación</option></select></div>
+        <div class="f"><label for="m">Cuéntanos</label><textarea id="m" rows="3"></textarea></div>
+        <button class="send">Enviar mensaje →</button>
+      </form>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© Kairo Arquitectos</span><span>Proyecto de demostración · Diseño y desarrollo: Santiago Arango</span></div></footer>
+
+<div class="lb" id="lb" aria-hidden="true">
+  <button class="lb-close" id="lb-close" aria-label="Cerrar">×</button>
+  <div class="lb-art" id="lb-art"></div>
+  <div class="lb-body">
+    <p class="eyebrow" id="lb-cat"></p>
+    <h3 id="lb-title"></h3>
+    <p id="lb-desc"></p>
+    <dl><div><dt>Ubicación</dt><dd id="lb-loc"></dd></div><div><dt>Año</dt><dd id="lb-year"></dd></div><div><dt>Área</dt><dd id="lb-area"></dd></div><div><dt>Estado</dt><dd id="lb-state"></dd></div></dl>
+    <div class="lb-nav"><button id="lb-prev">← Anterior</button><button id="lb-next">Siguiente →</button></div>
+  </div>
+</div>
+<a class="demo-back" href="../../proyectos/index.html#kairo">← Portafolio · Proyecto demo</a>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+/* Ilustraciones arquitectónicas generativas */
+function building(seed, pal, tall) {
+  let s = seed; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
+  const W = 800, H = tall ? 1000 : 600, ground = H * .82;
+  let out = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sky${seed}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${pal[0]}"/><stop offset="1" stop-color="${pal[1]}"/></linearGradient></defs>`;
+  out += `<rect width="${W}" height="${H}" fill="url(#sky${seed})"/>`;
+  out += `<circle cx="${200 + r() * 400}" cy="${H * (.18 + r() * .15)}" r="${50 + r() * 50}" fill="${pal[4]}" opacity=".9"/>`;
+  out += `<path d="M0 ${ground - 40} Q ${W * .3} ${ground - 120 - r() * 60} ${W * .6} ${ground - 50} T ${W} ${ground - 70} V ${H} H 0Z" fill="${pal[1]}" opacity=".55"/>`;
+  const n = 2 + Math.floor(r() * 3);
+  let x = 60 + r() * 60;
+  for (let i = 0; i < n && x < W - 120; i++) {
+    const w = 140 + r() * 180, h = 120 + r() * (tall ? 420 : 260), y = ground - h;
+    out += `<rect x="${x + 16}" y="${y + 16}" width="${w}" height="${h}" fill="#000" opacity=".12"/>`;
+    out += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${pal[2]}"/>`;
+    out += `<rect x="${x + w * .62}" y="${y}" width="${w * .38}" height="${h}" fill="${pal[3]}" opacity=".55"/>`;
+    if (r() > .5) out += `<path d="M${x - 10} ${y} L${x + w / 2} ${y - 40 - r() * 40} L${x + w + 10} ${y}Z" fill="${pal[3]}"/>`;
+    else out += `<rect x="${x - 14}" y="${y - 10}" width="${w + 28}" height="12" fill="${pal[3]}"/>`;
+    const cols = 2 + Math.floor(r() * 3), rows = Math.max(1, Math.floor(h / 70));
+    for (let c = 0; c < cols; c++) for (let k = 0; k < rows; k++) {
+      const ww = (w - 40) / cols - 12, wy = y + 24 + k * 64;
+      if (wy + 40 > ground - 10) continue;
+      out += `<rect x="${x + 20 + c * (ww + 12)}" y="${wy}" width="${ww}" height="38" fill="${r() > .3 ? pal[4] : pal[1]}" opacity="${r() > .3 ? .85 : .6}"/>`;
+    }
+    x += w + 30 + r() * 60;
+  }
+  out += `<rect y="${ground}" width="${W}" height="${H - ground}" fill="${pal[3]}"/>`;
+  for (let t = 0; t < 4; t++) { const tx = r() * W, th = 40 + r() * 50; out += `<rect x="${tx - 2}" y="${ground - th + 20}" width="4" height="${th}" fill="${pal[3]}"/><circle cx="${tx}" cy="${ground - th + 10}" r="${18 + r() * 12}" fill="#3f5f3a" opacity=".85"/>`; }
+  return out + '</svg>';
+}
+const PALS = [
+  ['#f6d5b8', '#e9a87c', '#f4efe7', '#c2410c', '#fff7ed'],
+  ['#cfe0e8', '#9cb8c4', '#fafaf9', '#57534e', '#fef3c7'],
+  ['#2a1f3d', '#7c3aed', '#e7e5e4', '#1c1917', '#fbbf24'],
+  ['#e7dcc8', '#c8b79a', '#a8a29e', '#44403c', '#fde68a'],
+  ['#fde2c7', '#f97316', '#fff', '#292524', '#fef9c3'],
+  ['#d6e4d0', '#93ad86', '#f5f5f4', '#3f3f46', '#ecfccb']
+];
+
+const PROJECTS = [
+  { t: 'Casa Ladera', c: 'Residencial', loc: 'Medellín', y: 2025, a: '420 m²', st: 'Construido', d: 'Vivienda escalonada sobre la pendiente que se abre al valle con grandes ventanales y patios interiores.' },
+  { t: 'Galería Umbral', c: 'Cultural', loc: 'Bogotá', y: 2024, a: '1.800 m²', st: 'Construido', d: 'Espacio expositivo donde la luz cenital cambia el recorrido a lo largo del día.' },
+  { t: 'Oficinas Prisma', c: 'Comercial', loc: 'Cali', y: 2025, a: '3.200 m²', st: 'En obra', d: 'Edificio corporativo con fachada de lamas que regulan el sol y ventilan de forma natural.' },
+  { t: 'Refugio Niebla', c: 'Residencial', loc: 'Guatapé', y: 2023, a: '180 m²', st: 'Construido', d: 'Cabaña de madera y piedra pensada para desaparecer entre los árboles.' },
+  { t: 'Mercado Central', c: 'Comercial', loc: 'Pereira', y: 2026, a: '5.400 m²', st: 'En diseño', d: 'Recuperación de un mercado histórico con una nueva cubierta ligera y plazas abiertas.' },
+  { t: 'Biblioteca Raíz', c: 'Cultural', loc: 'Manizales', y: 2024, a: '2.100 m²', st: 'Construido', d: 'Biblioteca pública con terrazas de lectura y un jardín que sube por la fachada.' }
+];
+PROJECTS.forEach((p, i) => p.svg = building(101 + i * 37, PALS[i % PALS.length]));
+
+$('#grid').innerHTML = PROJECTS.map((p, i) => `
+  <article class="tile reveal" data-i="${i}" data-c="${p.c}" tabindex="0">
+    <div class="img">${p.svg}<span class="view">Ver →</span></div>
+    <div class="tile-info"><h3>${p.t}</h3><span>${p.c} · ${p.y}</span></div>
+  </article>`).join('');
+$('#hero-art').innerHTML = building(7, PALS[0], true);
+$('#studio-art').innerHTML = building(55, PALS[2], true);
+$('#strip').innerHTML = Array(2).fill(['Vivienda', 'Cultura', 'Paisaje', 'Interiores', 'Urbanismo', 'Restauración'].map(w => `<span>${w}</span><i>✦</i>`).join('')).join('');
+
+/* Filtros */
+$$('#filters button').forEach(b => b.onclick = () => {
+  $$('#filters button').forEach(x => x.classList.toggle('on', x === b));
+  $$('.tile').forEach(t => {
+    const show = b.dataset.f === 'all' || t.dataset.c === b.dataset.f;
+    t.classList.toggle('hide', !show);
+    if (show) { t.classList.remove('in'); requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('in'))); }
+  });
+});
+
+/* Lightbox */
+let cur = 0;
+const visible = () => $$('.tile:not(.hide)').map(t => +t.dataset.i);
+function openLb(i) {
+  cur = i; const p = PROJECTS[i];
+  $('#lb-art').innerHTML = building(101 + i * 37, PALS[i % PALS.length], true);
+  $('#lb-cat').textContent = p.c; $('#lb-title').textContent = p.t; $('#lb-desc').textContent = p.d;
+  $('#lb-loc').textContent = p.loc; $('#lb-year').textContent = p.y; $('#lb-area').textContent = p.a; $('#lb-state').textContent = p.st;
+  $('#lb').classList.add('open'); document.body.style.overflow = 'hidden';
+}
+const closeLb = () => { $('#lb').classList.remove('open'); document.body.style.overflow = ''; };
+const step = d => { const v = visible(); openLb(v[(v.indexOf(cur) + d + v.length) % v.length]); };
+$('#grid').onclick = e => { const t = e.target.closest('.tile'); if (t) openLb(+t.dataset.i); };
+$('#grid').onkeydown = e => { const t = e.target.closest('.tile'); if (t && e.key === 'Enter') openLb(+t.dataset.i); };
+$('#lb-close').onclick = closeLb; $('#lb-prev').onclick = () => step(-1); $('#lb-next').onclick = () => step(1);
+document.addEventListener('keydown', e => {
+  if (!$('#lb').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1);
+});
+
+/* Revelado y contadores */
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if (!en.isIntersecting) return;
+  en.target.classList.add('in'); io.unobserve(en.target);
+  en.target.querySelectorAll('[data-n]').forEach(el => {
+    const end = +el.dataset.n, t0 = performance.now();
+    const f = now => { const k = Math.min(1, (now - t0) / 1600); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); };
+    requestAnimationFrame(f);
+  });
+}), { rootMargin: '0px 0px -10% 0px' });
+$$('.reveal').forEach(el => io.observe(el));
+
+/* Header, parallax y menú */
+const art = $('#hero-art svg');
+addEventListener('scroll', () => {
+  $('#hdr').classList.toggle('solid', scrollY > 40);
+  art.style.transform = `translateY(${scrollY * .15}px) scale(1.1)`;
+}, { passive: true });
+$('#burger').onclick = () => $('#mobile').classList.toggle('open');
+$$('#mobile a').forEach(a => a.onclick = () => $('#mobile').classList.remove('open'));
+
+/* Formulario (demostración) */
+$('#form').onsubmit = e => { e.preventDefault(); e.target.innerHTML = `<p class="ok">Gracias, ${$('#n').value.split(' ')[0] || ''}. Te escribiremos pronto para agendar una visita ✦</p>`; };
+
+requestAnimationFrame(() => document.body.classList.add('ready'));
+</script>
+</body>
+</html>

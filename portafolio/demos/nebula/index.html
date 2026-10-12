@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nebula Finance — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b1a;--panel:#12122a;--panel-2:#191936;--border:rgba(255,255,255,.08);--text:#ececf7;--muted:#8d8db0;--violet:#8b5cf6;--cyan:#22d3ee;--green:#34d399;--red:#fb7185;--amber:#fbbf24;--r:16px}
+[data-theme=light]{--bg:#f3f3fa;--panel:#fff;--panel-2:#f6f6fc;--border:rgba(20,20,60,.09);--text:#15152e;--muted:#6b6b8a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;transition:background .4s,color .4s}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--border);padding:24px 16px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;padding:0 10px 22px}
+.brand i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--violet),var(--cyan));display:grid;place-items:center;font-style:normal;color:#fff}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;color:var(--muted);font-weight:500;transition:.25s;text-align:left;width:100%}
+.nav-item svg{width:18px;height:18px}
+.nav-item:hover{background:var(--panel-2);color:var(--text)}
+.nav-item.active{background:linear-gradient(90deg,rgba(139,92,246,.22),transparent);color:var(--text);box-shadow:inset 3px 0 0 var(--violet)}
+.side-card{margin-top:auto;padding:18px;border-radius:var(--r);background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(34,211,238,.15));border:1px solid var(--border)}
+.side-card b{display:block;margin-bottom:4px}.side-card p{color:var(--muted);font-size:12.5px;margin-bottom:12px}
+main{padding:24px 28px 80px;min-width:0}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:26px;flex-wrap:wrap}
+.top h1{font-size:24px;letter-spacing:-.02em;margin-right:auto}
+.top h1 small{display:block;font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.seg{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:4px}
+.seg button{padding:7px 14px;border-radius:7px;color:var(--muted);font-weight:500;transition:.25s}
+.seg button.on{background:var(--violet);color:#fff}
+.icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel);display:grid;place-items:center}
+.icon-btn svg{width:18px;height:18px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;background:linear-gradient(135deg,var(--violet),#6d28d9);color:#fff;font-weight:600;box-shadow:0 8px 24px -8px var(--violet);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--panel-2);box-shadow:none;color:var(--text);border:1px solid var(--border)}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f472b6,var(--violet));display:grid;place-items:center;color:#fff;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:20px;animation:up .6s cubic-bezier(.16,1,.3,1) both}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.kpi .label{color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
+.kpi .value{font-size:26px;font-weight:700;letter-spacing:-.02em;margin:8px 0 4px}
+.delta{font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px}
+.delta.up{color:var(--green);background:rgba(52,211,153,.12)}.delta.down{color:var(--red);background:rgba(251,113,133,.12)}
+.spark{width:100%;height:36px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:1.8fr 1fr;gap:16px;margin-bottom:16px}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.card-head h2{font-size:16px}
+.legend{display:flex;gap:14px;color:var(--muted);font-size:12.5px}
+.legend span{display:flex;align-items:center;gap:6px}.legend i{width:10px;height:10px;border-radius:3px}
+.chart-wrap{position:relative;height:280px}
+canvas{width:100%;height:100%;display:block}
+.tip{position:absolute;pointer-events:none;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:12.5px;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transition:opacity .15s;white-space:nowrap;z-index:2}
+.tip b{display:block;margin-bottom:4px}
+.donut-wrap{display:grid;place-items:center;position:relative;margin:6px 0 16px}
+.donut-wrap svg{width:190px;height:190px;transform:rotate(-90deg)}
+.donut-wrap circle{fill:none;stroke-width:22;transition:stroke-width .25s,opacity .25s;cursor:pointer}
+.donut-center{position:absolute;text-align:center}
+.donut-center b{display:block;font-size:20px}.donut-center span{color:var(--muted);font-size:12px}
+.cats{display:grid;gap:8px}
+.cat{display:flex;align-items:center;gap:10px;font-size:13px;padding:6px 8px;border-radius:8px;transition:background .2s}
+.cat:hover,.cat.hl{background:var(--panel-2)}
+.cat i{width:10px;height:10px;border-radius:50%}.cat b{margin-left:auto}
+.table-tools{display:flex;gap:10px;flex-wrap:wrap}
+.input{padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);outline:none;min-width:0}
+.input:focus{border-color:var(--violet)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;color:var(--muted);font-weight:500;font-size:12.5px;padding:10px 12px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{color:var(--text)}
+td{padding:13px 12px;border-bottom:1px solid var(--border)}
+tr{transition:background .2s}tbody tr:hover{background:var(--panel-2)}
+tr.new{animation:flash 1.6s}
+@keyframes flash{0%{background:rgba(139,92,246,.35)}}
+.pill{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--panel-2);border:1px solid var(--border)}
+.amt{font-weight:600;text-align:right;white-space:nowrap}.amt.pos{color:var(--green)}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.table-scroll{overflow-x:auto}
+.modal{position:fixed;inset:0;background:rgba(5,5,15,.6);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px;opacity:0;visibility:hidden;transition:.3s;z-index:50}
+.modal.open{opacity:1;visibility:visible}
+.modal form{width:min(420px,100%);background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:26px;display:grid;gap:14px;transform:translateY(20px) scale(.97);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.modal.open form{transform:none}
+.modal h3{font-size:19px}
+.modal label{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.types{display:flex;gap:8px}
+.types label{flex:1;display:block}
+.types input{display:none}
+.types span{display:block;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--border);color:var(--text);transition:.2s;cursor:pointer}
+.types input:checked+span{border-color:var(--violet);background:rgba(139,92,246,.18)}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--text);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:500;transform:translateY(150%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:60}
+.toast.show{transform:none}
+.burger{display:none}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:800px){.app{grid-template-columns:1fr}aside{position:fixed;left:0;top:0;z-index:40;width:250px;transform:translateX(-100%);transition:transform .35s}aside.open{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}.burger{display:grid}main{padding:18px 16px 90px}.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi .value{font-size:20px}.top .seg{order:5;width:100%}.top .seg button{flex:1}}
+@media(max-width:480px){.kpis{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+.demo-back{position:fixed;left:16px;bottom:16px;z-index:9999;padding:10px 16px;border-radius:999px;background:rgba(10,10,20,.85);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);box-shadow:0 8px 24px rgba(0,0,0,.3)}.demo-back:hover{background:#000}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside id="side">
+    <div class="brand"><i>N</i>Nebula</div>
+    <button class="nav-item active" data-go="resumen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>Resumen</button>
+    <button class="nav-item" data-go="transacciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7h14l-4-4M17 17H3l4 4"/></svg>Transacciones</button>
+    <button class="nav-item" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 4"/></svg>Presupuestos</button>
+    <button class="nav-item" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reportes</button>
+    <button class="nav-item" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.8 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.8-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.8H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 2.8-1.2V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.8 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.8H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Ajustes</button>
+    <div class="side-card"><b>Plan Pro ✦</b><p>Reportes ilimitados y exportación a Excel.</p><button class="btn" data-soon style="width:100%;justify-content:center">Mejorar plan</button></div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <button class="icon-btn burger" id="burger" aria-label="Menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <h1><small id="hello">Hola</small>Resumen financiero</h1>
+      <div class="seg" id="range"><button data-r="7">7D</button><button data-r="30" class="on">30D</button><button data-r="12">12M</button></div>
+      <button class="icon-btn" id="theme" aria-label="Cambiar tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="btn" id="add">+ Nueva transacción</button>
+      <div class="avatar">SA</div>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid2">
+      <div class="card" style="animation-delay:.15s">
+        <div class="card-head"><h2>Flujo de caja</h2><div class="legend"><span><i style="background:var(--violet)"></i>Ingresos</span><span><i style="background:var(--cyan)"></i>Gastos</span></div></div>
+        <div class="chart-wrap"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div>
+      </div>
+      <div class="card" style="animation-delay:.25s">
+        <div class="card-head"><h2>Gastos por categoría</h2></div>
+        <div class="donut-wrap"><svg viewBox="0 0 200 200" id="donut"></svg><div class="donut-center"><b id="donut-total">$0</b><span id="donut-label">Total gastos</span></div></div>
+        <div class="cats" id="cats"></div>
+      </div>
+    </section>
+
+    <section class="card" id="transacciones" style="animation-delay:.35s">
+      <div class="card-head">
+        <h2>Transacciones recientes</h2>
+        <div class="table-tools">
+          <input class="input" id="q" placeholder="Buscar…" aria-label="Buscar transacciones">
+          <select class="input" id="fcat" aria-label="Filtrar categoría"><option value="">Todas</option></select>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th data-sort="date">Fecha ↕</th><th data-sort="desc">Descripción ↕</th><th>Categoría</th><th data-sort="amount" style="text-align:right">Monto ↕</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <form id="form">
+    <h3>Nueva transacción</h3>
+    <div class="types"><label><input type="radio" name="type" value="in"><span>↑ Ingreso</span></label><label><input type="radio" name="type" value="out" checked><span>↓ Gasto</span></label></div>
+    <label>Descripción<input class="input" name="desc" required placeholder="Ej: Licencia de Figma"></label>
+    <div class="row">
+      <label>Monto (USD)<input class="input" name="amount" type="number" min="1" step="1" required placeholder="250"></label>
+      <label>Categoría<select class="input" name="cat" id="form-cat"></select></label>
+    </div>
+    <div class="row"><button type="button" class="btn ghost" id="cancel" style="justify-content:center">Cancelar</button><button class="btn" style="justify-content:center">Guardar</button></div>
+  </form>
+</div>
+<div class="toast" id="toast"></div>
+<a class="demo-back" href="../../proyectos/index.html#nebula">← Portafolio · Proyecto demo</a>
+
+<script>
+const $ = s => document.querySelector(s);
+const fmt = n => (n < 0 ? '-' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('es');
+let seed = 11;
+const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+
+const CATS = { 'Ventas': '#34d399', 'Nómina': '#8b5cf6', 'Software': '#22d3ee', 'Marketing': '#f472b6', 'Oficina': '#fbbf24', 'Viajes': '#fb923c' };
+const today = new Date();
+const daysAgo = d => { const x = new Date(today); x.setDate(x.getDate() - d); return x; };
+let tx = [
+  [0, 'Suscripción cliente Acme', 'Ventas', 4200], [1, 'AWS', 'Software', -1240], [2, 'Campaña Google Ads', 'Marketing', -890],
+  [3, 'Pago nómina quincenal', 'Nómina', -18400], [4, 'Licencias Figma', 'Software', -180], [5, 'Cliente Lumen Home', 'Ventas', 7600],
+  [7, 'Coworking', 'Oficina', -1100], [8, 'Vuelo Bogotá', 'Viajes', -420], [10, 'Renovación anual Orbita', 'Ventas', 12800],
+  [12, 'LinkedIn Ads', 'Marketing', -640], [14, 'Notion + Slack', 'Software', -310], [17, 'Pago nómina quincenal', 'Nómina', -18400],
+  [20, 'Cliente Verde Market', 'Ventas', 9300], [24, 'Material de oficina', 'Oficina', -230]
+].map(([d, desc, cat, amount], i) => ({ id: i, date: daysAgo(d), desc, cat, amount }));
+
+/* --- Series del gráfico --- */
+function makeSeries(range) {
+  seed = range * 97;
+  const n = range === 12 ? 12 : range;
+  const labels = [], inc = [], exp = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const d = new Date(today);
+    if (range === 12) d.setMonth(d.getMonth() - i); else d.setDate(d.getDate() - i);
+    labels.push(range === 12 ? d.toLocaleDateString('es', { month: 'short' }) : d.toLocaleDateString('es', { day: 'numeric', month: 'short' }));
+    const k = range === 12 ? 30 : 1;
+    const t = (n - i) / n;
+    inc.push((1800 + rnd() * 1600 + t * 900) * k);
+    exp.push((1300 + rnd() * 1100 + t * 300) * k);
+  }
+  return { labels, inc, exp };
+}
+let range = 30, data = makeSeries(30), hover = -1, anim = 0;
+
+const canvas = $('#chart'), ctx = canvas.getContext('2d'), tip = $('#tip');
+function sizeCanvas() {
+  const dpr = Math.min(devicePixelRatio || 1, 2), r = canvas.getBoundingClientRect();
+  canvas.width = r.width * dpr; canvas.height = r.height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function draw() {
+  const w = canvas.clientWidth, h = canvas.clientHeight, pad = { l: 52, r: 10, t: 10, b: 28 };
+  ctx.clearRect(0, 0, w, h);
+  const max = Math.max(...data.inc, ...data.exp) * 1.15;
+  const n = data.labels.length;
+  const x = i => pad.l + (w - pad.l - pad.r) * (n === 1 ? .5 : i / (n - 1));
+  const y = v => h - pad.b - (h - pad.t - pad.b) * (v / max) * anim;
+  ctx.font = '11px Inter'; ctx.fillStyle = css('--muted'); ctx.strokeStyle = css('--border'); ctx.lineWidth = 1;
+  for (let g = 0; g <= 4; g++) {
+    const v = max * g / 4, yy = h - pad.b - (h - pad.t - pad.b) * g / 4;
+    ctx.beginPath(); ctx.moveTo(pad.l, yy); ctx.lineTo(w - pad.r, yy); ctx.stroke();
+    ctx.fillText('$' + (v >= 1000 ? Math.round(v / 1000) + 'k' : Math.round(v)), 6, yy + 4);
+  }
+  const step = Math.ceil(n / 7);
+  data.labels.forEach((l, i) => { if (i % step === 0 || i === n - 1) ctx.fillText(l, x(i) - 14, h - 8); });
+  const line = (arr, color) => {
+    const grad = ctx.createLinearGradient(0, pad.t, 0, h - pad.b);
+    grad.addColorStop(0, color + '55'); grad.addColorStop(1, color + '00');
+    ctx.beginPath();
+    arr.forEach((v, i) => {
+      if (!i) return ctx.moveTo(x(i), y(v));
+      const cx = (x(i - 1) + x(i)) / 2;
+      ctx.bezierCurveTo(cx, y(arr[i - 1]), cx, y(v), x(i), y(v));
+    });
+    ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+    ctx.lineTo(x(n - 1), h - pad.b); ctx.lineTo(x(0), h - pad.b); ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+  };
+  line(data.inc, '#8b5cf6'); line(data.exp, '#22d3ee');
+  if (hover >= 0) {
+    ctx.strokeStyle = css('--muted'); ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(x(hover), pad.t); ctx.lineTo(x(hover), h - pad.b); ctx.stroke(); ctx.setLineDash([]);
+    [[data.inc, '#8b5cf6'], [data.exp, '#22d3ee']].forEach(([a, c]) => {
+      ctx.beginPath(); ctx.arc(x(hover), y(a[hover]), 5, 0, 7); ctx.fillStyle = c; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = css('--panel'); ctx.stroke();
+    });
+  }
+  return { x, pad, w, n };
+}
+function animateChart() {
+  anim = 0; const t0 = performance.now();
+  const f = now => { anim = Math.min(1, (now - t0) / 700); anim = 1 - Math.pow(1 - anim, 3); draw(); if (anim < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+canvas.addEventListener('pointermove', e => {
+  const r = canvas.getBoundingClientRect(), { x, pad, w, n } = draw();
+  const px = e.clientX - r.left;
+  hover = Math.max(0, Math.min(n - 1, Math.round((px - pad.l) / (w - pad.l - pad.r) * (n - 1))));
+  draw();
+  tip.innerHTML = `<b>${data.labels[hover]}</b><span style="color:#a78bfa">Ingresos: ${fmt(data.inc[hover])}</span><br><span style="color:#22d3ee">Gastos: ${fmt(data.exp[hover])}</span>`;
+  tip.style.opacity = 1;
+  const tx = x(hover) + 14, tw = tip.offsetWidth;
+  tip.style.left = (tx + tw > r.width ? x(hover) - tw - 14 : tx) + 'px';
+  tip.style.top = '20px';
+});
+canvas.addEventListener('pointerleave', () => { hover = -1; tip.style.opacity = 0; draw(); });
+document.querySelectorAll('#range button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#range button').forEach(x => x.classList.toggle('on', x === b));
+  range = +b.dataset.r; data = makeSeries(range); renderKpis(); animateChart();
+});
+
+/* --- KPIs con sparklines --- */
+function spark(arr, color) {
+  const max = Math.max(...arr), min = Math.min(...arr);
+  const pts = arr.map((v, i) => `${(i / (arr.length - 1)) * 100},${36 - ((v - min) / (max - min || 1)) * 30 - 3}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 100 36" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function renderKpis() {
+  const sum = a => a.reduce((s, v) => s + v, 0);
+  const extraIn = sum(tx.filter(t => t.amount > 0 && t.id >= 100).map(t => t.amount));
+  const extraOut = -sum(tx.filter(t => t.amount < 0 && t.id >= 100).map(t => t.amount));
+  const inc = sum(data.inc) + extraIn, exp = sum(data.exp) + extraOut;
+  const balance = 248000 + inc - exp, burn = exp / (range === 12 ? 12 : range / 30);
+  const k = [
+    ['Ingresos', fmt(inc), '+12,4%', 'up', data.inc, '#8b5cf6'],
+    ['Gastos', fmt(exp), '+4,1%', 'down', data.exp, '#22d3ee'],
+    ['Balance', fmt(balance), '+8,9%', 'up', data.inc.map((v, i) => v - data.exp[i]), '#34d399'],
+    ['Runway', (balance / burn).toFixed(1) + ' meses', '+1,2', 'up', data.exp.map(v => 1 / v), '#fbbf24']
+  ];
+  $('#kpis').innerHTML = k.map(([l, v, d, dir, arr, c], i) => `
+    <div class="card kpi" style="animation-delay:${i * .06}s"><div class="label">${l}<span class="delta ${dir}">${d}</span></div>
+    <div class="value">${v}</div>${spark(arr, c)}</div>`).join('');
+}
+
+/* --- Dona de gastos --- */
+function renderDonut() {
+  const by = {};
+  tx.filter(t => t.amount < 0).forEach(t => by[t.cat] = (by[t.cat] || 0) - t.amount);
+  const total = Object.values(by).reduce((s, v) => s + v, 0);
+  const C = 2 * Math.PI * 70; let off = 0;
+  const entries = Object.entries(by).sort((a, b) => b[1] - a[1]);
+  $('#donut').innerHTML = entries.map(([c, v]) => {
+    const len = v / total * C;
+    const s = `<circle cx="100" cy="100" r="70" stroke="${CATS[c]}" stroke-dasharray="${Math.max(0, len - 2)} ${C}" stroke-dashoffset="${-off}" data-c="${c}"/>`;
+    off += len; return s;
+  }).join('');
+  $('#donut-total').textContent = fmt(total); $('#donut-label').textContent = 'Total gastos';
+  $('#cats').innerHTML = entries.map(([c, v]) => `<div class="cat" data-c="${c}"><i style="background:${CATS[c]}"></i>${c}<b>${fmt(v)}</b><span style="color:var(--muted);width:42px;text-align:right">${Math.round(v / total * 100)}%</span></div>`).join('');
+  const focus = c => {
+    document.querySelectorAll('#donut circle').forEach(el => { el.style.strokeWidth = !c || el.dataset.c === c ? (c ? 30 : 22) : 22; el.style.opacity = !c || el.dataset.c === c ? 1 : .3; });
+    document.querySelectorAll('.cat').forEach(el => el.classList.toggle('hl', el.dataset.c === c));
+    $('#donut-total').textContent = fmt(c ? by[c] : total); $('#donut-label').textContent = c || 'Total gastos';
+  };
+  document.querySelectorAll('#donut circle, .cat').forEach(el => { el.onmouseenter = () => focus(el.dataset.c); el.onmouseleave = () => focus(null); });
+}
+
+/* --- Tabla --- */
+let sort = { key: 'date', dir: -1 }, newId = null;
+Object.keys(CATS).forEach(c => { $('#fcat').add(new Option(c, c)); $('#form-cat').add(new Option(c, c)); });
+function renderRows() {
+  const q = $('#q').value.toLowerCase(), fc = $('#fcat').value;
+  const list = tx.filter(t => (!fc || t.cat === fc) && t.desc.toLowerCase().includes(q))
+    .sort((a, b) => (a[sort.key] > b[sort.key] ? 1 : -1) * sort.dir);
+  $('#rows').innerHTML = list.length ? list.map(t => `
+    <tr class="${t.id === newId ? 'new' : ''}"><td style="color:var(--muted);white-space:nowrap">${t.date.toLocaleDateString('es', { day: '2-digit', month: 'short' })}</td>
+    <td>${t.desc.replace(/</g, '&lt;')}</td><td><span class="pill" style="border-color:${CATS[t.cat]}55">${t.cat}</span></td>
+    <td class="amt ${t.amount > 0 ? 'pos' : ''}">${t.amount > 0 ? '+' : ''}${fmt(t.amount)}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="empty">Sin resultados para tu búsqueda</td></tr>';
+}
+$('#q').oninput = renderRows; $('#fcat').onchange = renderRows;
+document.querySelectorAll('th[data-sort]').forEach(th => th.onclick = () => {
+  sort = { key: th.dataset.sort, dir: sort.key === th.dataset.sort ? -sort.dir : -1 }; renderRows();
+});
+
+/* --- Modal --- */
+const modal = $('#modal');
+$('#add').onclick = () => { modal.classList.add('open'); setTimeout(() => $('#form [name=desc]').focus(), 100); };
+$('#cancel').onclick = () => modal.classList.remove('open');
+modal.onclick = e => { if (e.target === modal) modal.classList.remove('open'); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
+$('#form').onsubmit = e => {
+  e.preventDefault();
+  const f = new FormData(e.target), amt = +f.get('amount');
+  newId = 100 + tx.length;
+  tx.push({ id: newId, date: new Date(), desc: f.get('desc'), cat: f.get('cat'), amount: f.get('type') === 'in' ? amt : -amt });
+  e.target.reset(); modal.classList.remove('open');
+  renderRows(); renderDonut(); renderKpis(); toast('✓ Transacción guardada');
+};
+
+/* --- Varios --- */
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2400); }
+document.querySelectorAll('[data-soon]').forEach(b => b.onclick = () => toast('Esta sección es parte de la versión completa'));
+document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-go]').forEach(x => x.classList.toggle('active', x === b));
+  if (b.dataset.go === 'transacciones') $('#transacciones').scrollIntoView({ behavior: 'smooth' }); else scrollTo({ top: 0, behavior: 'smooth' });
+  $('#side').classList.remove('open');
+});
+$('#burger').onclick = () => $('#side').classList.toggle('open');
+$('#theme').onclick = () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === 'light' ? '' : 'light'; draw(); };
+const hr = today.getHours();
+$('#hello').textContent = (hr < 12 ? 'Buenos días' : hr < 19 ? 'Buenas tardes' : 'Buenas noches') + ', Santiago 👋';
+addEventListener('resize', () => { sizeCanvas(); draw(); });
+
+sizeCanvas(); renderKpis(); renderDonut(); renderRows(); animateChart();
+</script>
+</body>
+</html>

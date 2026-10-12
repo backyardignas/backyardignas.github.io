@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mareas — Respira, enfoca, descansa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#042327;--deep-2:#073237;--card:rgba(255,255,255,.07);--line:rgba(255,255,255,.1);--text:#effcf9;--muted:#93b9b4;--teal:#2dd4bf;--lime:#bef264;--coral:#fb923c}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Nunito,system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;gap:40px;grid-template-columns:auto auto;justify-content:center;align-items:center;padding:30px;background:radial-gradient(circle at 20% 20%,#0f4c4c,transparent 50%),radial-gradient(circle at 80% 80%,#2b4a14,transparent 50%),#031a1d;color:var(--text)}
+button,input{font:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer}
+.pitch{max-width:340px}
+.pitch h1{font-size:46px;line-height:1;letter-spacing:-.03em;margin-bottom:16px}
+.pitch h1 span{background:linear-gradient(90deg,var(--teal),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pitch p{color:var(--muted);font-size:17px;margin-bottom:22px}
+.pitch ul{list-style:none;display:grid;gap:10px;color:var(--muted)}
+.pitch li::before{content:"✓ ";color:var(--lime);font-weight:800}
+.phone{width:380px;height:780px;border-radius:52px;padding:12px;background:#0b0b0b;box-shadow:0 0 0 2px #2a2a2a,0 50px 100px -20px rgba(0,0,0,.7);position:relative}
+.screen{position:relative;height:100%;border-radius:42px;overflow:hidden;background:linear-gradient(180deg,var(--deep-2),var(--deep));display:flex;flex-direction:column}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:#000;z-index:5}
+.status{display:flex;justify-content:space-between;padding:16px 28px 0;font-size:13px;font-weight:700;height:44px}
+.views{flex:1;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;overflow-y:auto;padding:12px 22px 20px;opacity:0;transform:translateX(30px);pointer-events:none;transition:opacity .4s,transform .5s cubic-bezier(.16,1,.3,1);scrollbar-width:none}
+.view::-webkit-scrollbar{display:none}
+.view.on{opacity:1;transform:none;pointer-events:auto}
+h2{font-size:28px;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;margin-bottom:14px}
+.moods{display:flex;justify-content:space-between;margin:14px 0 6px}
+.moods button{font-size:30px;width:52px;height:52px;border-radius:18px;transition:transform .3s,background .3s}
+.moods button:hover{transform:scale(1.12)}
+.moods button.on{background:rgba(190,242,100,.18);transform:scale(1.15)}
+.mood-msg{color:var(--muted);font-size:14px;min-height:20px}
+.hero-card{background:linear-gradient(135deg,var(--teal),#0e7490);color:#022;position:relative;overflow:hidden;border:0}
+.hero-card h3{font-size:22px;margin:4px 0 6px}
+.hero-card p{opacity:.8;margin-bottom:14px}
+.hero-card .wave{position:absolute;right:-30px;bottom:-40px;width:160px;height:160px;border-radius:50%;border:18px solid rgba(255,255,255,.25)}
+.pill-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#022;color:var(--lime);font-weight:800}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stats .card{margin:0;text-align:center}
+.stats b{display:block;font-size:30px;color:var(--lime)}
+.stats span{color:var(--muted);font-size:13px}
+.tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+/* Respirar */
+.patterns{display:flex;gap:8px;margin-bottom:10px}
+.patterns button{flex:1;padding:10px 6px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:13px;font-weight:700;transition:.25s}
+.patterns button.on{background:var(--lime);color:#122;border-color:transparent}
+.breath{position:relative;height:330px;display:grid;place-items:center}
+.ring{position:absolute;width:250px;height:250px;border-radius:50%;border:1px dashed rgba(255,255,255,.18)}
+.orb{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#a7f3d0,var(--teal) 55%,#0f766e);box-shadow:0 0 60px rgba(45,212,191,.6),0 0 0 14px rgba(45,212,191,.12),0 0 0 30px rgba(45,212,191,.06);transform:scale(1);transition-property:transform;transition-timing-function:ease-in-out}
+.phase{position:absolute;text-align:center;pointer-events:none}
+.phase b{display:block;font-size:24px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.phase span{font-size:40px;font-weight:800}
+.controls{display:flex;justify-content:center;gap:12px;align-items:center}
+.big-btn{width:74px;height:74px;border-radius:50%;background:var(--lime);color:#122;display:grid;place-items:center;box-shadow:0 10px 30px -8px var(--lime);transition:transform .2s}
+.big-btn:active{transform:scale(.94)}
+.big-btn svg{width:30px;height:30px}
+.small-btn{width:50px;height:50px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center}
+.small-btn svg{width:20px;height:20px}
+.cycles{text-align:center;color:var(--muted);margin-top:14px;font-size:14px}
+/* Hábitos */
+.today{display:flex;align-items:center;gap:16px}
+.today svg{width:76px;height:76px;transform:rotate(-90deg)}
+.today circle{fill:none;stroke-width:8}
+.habit{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);margin-bottom:10px}
+.habit .ico{font-size:22px;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex-shrink:0}
+.habit .info{flex:1;min-width:0}
+.habit b{display:block;font-size:15px}
+.habit small{color:var(--muted);font-size:12px}
+.days{display:flex;gap:4px;margin-top:6px}
+.days button{width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.08);font-size:10px;font-weight:800;color:var(--muted);transition:transform .2s,background .2s}
+.days button.done{background:var(--teal);color:#022}
+.days button.today-d{outline:2px solid var(--lime);outline-offset:1px}
+.days button:active{transform:scale(.85)}
+.del{color:var(--muted);font-size:18px;padding:4px 6px;border-radius:8px}
+.add{display:flex;gap:8px;margin-top:6px}
+.add input{flex:1;min-width:0;padding:13px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line);outline:none}
+.add input:focus{border-color:var(--teal)}
+.add button{padding:0 18px;border-radius:16px;background:var(--teal);color:#022;font-weight:800}
+/* Sonidos */
+.sounds{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sound{border-radius:24px;padding:16px;background:var(--card);border:1px solid var(--line);text-align:left;transition:.3s;position:relative;overflow:hidden}
+.sound .emo{font-size:34px;display:block;margin-bottom:12px}
+.sound b{display:block}
+.sound small{color:var(--muted)}
+.sound.on{background:linear-gradient(135deg,rgba(45,212,191,.35),rgba(190,242,100,.18));border-color:var(--teal)}
+.sound .eq{position:absolute;top:16px;right:16px;display:flex;gap:2px;align-items:flex-end;height:16px;opacity:0}
+.sound.on .eq{opacity:1}
+.eq i{width:3px;background:var(--lime);border-radius:2px;animation:eq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+.sound input[type=range]{width:100%;margin-top:12px;accent-color:var(--lime)}
+.timer-row{display:flex;gap:8px;margin-top:6px}
+.timer-row button{flex:1;padding:10px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-weight:700;font-size:13px}
+.timer-row button.on{background:var(--teal);color:#022;border-color:transparent}
+/* Tabs */
+.tabs{display:flex;justify-content:space-around;padding:10px 12px 26px;background:rgba(2,20,22,.85);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.tabs button{display:grid;justify-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--muted);padding:6px 10px;border-radius:14px;transition:.25s}
+.tabs svg{width:22px;height:22px}
+.tabs button.on{color:var(--lime)}
+.tabs button.on svg{transform:translateY(-2px)}
+.confetti{position:absolute;inset:0;pointer-events:none;z-index:10}
+@media(max-width:820px){body{display:block;padding:0;background:var(--deep)}.pitch{display:none}.phone{width:100%;height:100vh;height:100dvh;border-radius:0;padding:0;box-shadow:none;background:none}.screen{border-radius:0}.notch{display:none}}
+.demo-back{position:fixed;left:16px;bottom:16px;z-index:9999;padding:10px 16px;border-radius:999px;background:rgba(10,10,20,.85);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);box-shadow:0 8px 24px rgba(0,0,0,.3)}.demo-back:hover{background:#000}
+@media(max-width:820px){.demo-back{top:12px;bottom:auto;left:auto;right:12px;padding:8px 12px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="pitch">
+  <h1>Respira.<br><span>Encuentra tu marea.</span></h1>
+  <p>Prototipo funcional de la app Mareas. Toca, respira y explora: todo funciona.</p>
+  <ul><li>Ejercicios de respiración guiada</li><li>Seguimiento de hábitos con rachas</li><li>Sonidos ambientales generados en vivo</li><li>Tus datos se guardan en este navegador</li></ul>
+</div>
+
+<div class="phone">
+  <div class="screen">
+    <div class="notch"></div>
+    <div class="status"><span id="time">9:41</span><span>●●● 100%</span></div>
+    <div class="views">
+      <!-- INICIO -->
+      <section class="view on" data-view="home">
+        <h2 id="greet">Hola, Santiago</h2>
+        <p class="sub">¿Cómo te sientes hoy?</p>
+        <div class="card">
+          <div class="moods" id="moods"><button data-m="0">😣</button><button data-m="1">😕</button><button data-m="2">😐</button><button data-m="3">🙂</button><button data-m="4">😄</button></div>
+          <p class="mood-msg" id="mood-msg">Elige un estado de ánimo para recibir una recomendación.</p>
+        </div>
+        <div class="card hero-card">
+          <span class="tag">Sesión del día · 4 min</span>
+          <h3>Respiración 4-7-8</h3>
+          <p>Ideal para bajar el ritmo antes de dormir.</p>
+          <button class="pill-btn" data-goto="breathe">▶ Empezar</button>
+          <span class="wave"></span>
+        </div>
+        <div class="stats">
+          <div class="card"><b id="streak">0</b><span>días de racha</span></div>
+          <div class="card"><b id="minutes">0</b><span>min respirando</span></div>
+        </div>
+      </section>
+
+      <!-- RESPIRAR -->
+      <section class="view" data-view="breathe">
+        <h2>Respira</h2>
+        <p class="sub">Sigue el círculo con tu respiración.</p>
+        <div class="patterns" id="patterns">
+          <button class="on" data-p="478">4-7-8</button><button data-p="box">Caja</button><button data-p="coh">Coherente</button>
+        </div>
+        <div class="breath">
+          <span class="ring"></span>
+          <div class="orb" id="orb"></div>
+          <div class="phase"><b id="phase">Listo</b><span id="count"></span></div>
+        </div>
+        <div class="controls">
+          <button class="small-btn" id="reset" aria-label="Reiniciar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
+          <button class="big-btn" id="play" aria-label="Empezar"><svg id="play-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="small-btn" id="haptic" aria-label="Vibración">📳</button>
+        </div>
+        <p class="cycles" id="cycles">0 ciclos completados</p>
+      </section>
+
+      <!-- HÁBITOS -->
+      <section class="view" data-view="habits">
+        <h2>Hábitos</h2>
+        <p class="sub">Toca un día para marcarlo.</p>
+        <div class="card today">
+          <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" stroke="rgba(255,255,255,.1)"/><circle id="today-ring" cx="40" cy="40" r="34" stroke="#bef264" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="213.6" style="transition:stroke-dashoffset .8s"/></svg>
+          <div><b id="today-txt" style="font-size:22px">0/0</b><br><span style="color:var(--muted)">hábitos completados hoy</span></div>
+        </div>
+        <div id="habits"></div>
+        <form class="add" id="add"><input id="new-habit" placeholder="Nuevo hábito…" maxlength="28"><button>+</button></form>
+      </section>
+
+      <!-- SONIDOS -->
+      <section class="view" data-view="sounds">
+        <h2>Sonidos</h2>
+        <p class="sub">Combínalos para crear tu ambiente.</p>
+        <div class="sounds" id="sounds"></div>
+        <p class="sub" style="margin:20px 0 6px">Apagar en</p>
+        <div class="timer-row" id="timers"><button data-t="0" class="on">∞</button><button data-t="5">5 min</button><button data-t="15">15 min</button><button data-t="30">30 min</button></div>
+      </section>
+      <canvas class="confetti" id="confetti"></canvas>
+    </div>
+
+    <nav class="tabs">
+      <button class="on" data-goto="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</button>
+      <button data-goto="breathe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Respirar</button>
+      <button data-goto="habits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Hábitos</button>
+      <button data-goto="sounds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Sonidos</button>
+    </nav>
+  </div>
+</div>
+<a class="demo-back" href="../../proyectos/index.html#mareas">← Portafolio · Proyecto demo</a>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const store = { get(k, d) { try { return JSON.parse(localStorage.getItem('mareas-' + k)) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('mareas-' + k, JSON.stringify(v)); } catch (e) {} } };
+
+/* Navegación */
+function go(v) {
+  $$('.view').forEach(x => x.classList.toggle('on', x.dataset.view === v));
+  $$('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.goto === v));
+}
+$$('[data-goto]').forEach(b => b.onclick = () => go(b.dataset.goto));
+
+/* Hora y saludo */
+const now = new Date(), h = now.getHours();
+$('#time').textContent = now.toLocaleTimeString('es', { hour: 'numeric', minute: '2-digit' });
+$('#greet').textContent = (h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches') + ', Santiago';
+
+/* Ánimo */
+const MOODS = ['Prueba la respiración 4-7-8: calma el sistema nervioso en minutos.', 'Unos minutos de lluvia y respiración coherente pueden ayudarte.', 'Una pausa de respiración en caja te ayudará a enfocarte.', '¡Bien! Mantén la racha completando tus hábitos de hoy.', '¡Genial! Aprovecha la energía y marca tus hábitos ✨'];
+$$('#moods button').forEach(b => b.onclick = () => {
+  $$('#moods button').forEach(x => x.classList.toggle('on', x === b));
+  $('#mood-msg').textContent = MOODS[b.dataset.m];
+});
+
+/* Respiración */
+const PATTERNS = { '478': [['Inhala', 4, 1.6], ['Sostén', 7, 1.6], ['Exhala', 8, 1]], box: [['Inhala', 4, 1.6], ['Sostén', 4, 1.6], ['Exhala', 4, 1], ['Sostén', 4, 1]], coh: [['Inhala', 5, 1.6], ['Exhala', 5, 1]] };
+let pattern = '478', running = false, step = 0, left = 0, timer = null, cycles = 0, haptic = true, secs = store.get('secs', 0);
+const orb = $('#orb');
+const renderMinutes = () => { $('#minutes').textContent = Math.floor(secs / 60); };
+function phaseStart() {
+  const [name, dur, scale] = PATTERNS[pattern][step];
+  $('#phase').textContent = name; left = dur; $('#count').textContent = left;
+  orb.style.transitionDuration = dur + 's'; orb.style.transform = `scale(${scale})`;
+  if (haptic && navigator.vibrate) navigator.vibrate(40);
+}
+function tick() {
+  left--; secs++; store.set('secs', secs); renderMinutes();
+  if (left > 0) { $('#count').textContent = left; return; }
+  step = (step + 1) % PATTERNS[pattern].length;
+  if (step === 0) { cycles++; $('#cycles').textContent = `${cycles} ciclo${cycles === 1 ? '' : 's'} completado${cycles === 1 ? '' : 's'}`; if (cycles % 3 === 0) confetti(); }
+  phaseStart();
+}
+function setPlay(on) {
+  running = on;
+  $('#play-ico').innerHTML = on ? '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>' : '<path d="M8 5v14l11-7z"/>';
+  if (on) { phaseStart(); timer = setInterval(tick, 1000); }
+  else { clearInterval(timer); $('#phase').textContent = 'En pausa'; orb.style.transitionDuration = '.8s'; orb.style.transform = 'scale(1)'; }
+}
+$('#play').onclick = () => setPlay(!running);
+$('#reset').onclick = () => { setPlay(false); step = 0; cycles = 0; $('#phase').textContent = 'Listo'; $('#count').textContent = ''; $('#cycles').textContent = '0 ciclos completados'; };
+$('#haptic').onclick = e => { haptic = !haptic; e.currentTarget.style.opacity = haptic ? 1 : .4; };
+$$('#patterns button').forEach(b => b.onclick = () => {
+  $$('#patterns button').forEach(x => x.classList.toggle('on', x === b));
+  pattern = b.dataset.p; step = 0; if (running) { clearInterval(timer); setPlay(true); }
+});
+
+/* Hábitos */
+const DAYS = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+const todayIdx = (now.getDay() + 6) % 7;
+let habits = store.get('habits', [
+  { ico: '🧘', name: 'Meditar 10 min', days: [1, 1, 0, 1, 0, 0, 0] },
+  { ico: '💧', name: 'Tomar 2L de agua', days: [1, 1, 1, 0, 1, 0, 0] },
+  { ico: '📖', name: 'Leer 20 páginas', days: [0, 1, 0, 1, 0, 0, 0] },
+  { ico: '🌙', name: 'Dormir antes de las 11', days: [1, 0, 1, 1, 0, 0, 0] }
+]);
+const ICONS = ['✨', '🏃', '🎧', '🥗', '✍️', '🌿'];
+function streakOf(days) { let s = 0; for (let i = todayIdx; i >= 0 && days[i]; i--) s++; return s; }
+function renderHabits() {
+  $('#habits').innerHTML = habits.map((hb, i) => `
+    <div class="habit"><span class="ico">${hb.ico}</span>
+      <div class="info"><b>${hb.name.replace(/</g, '&lt;')}</b><small>🔥 ${streakOf(hb.days)} días seguidos</small>
+        <div class="days">${hb.days.map((d, k) => `<button class="${d ? 'done' : ''} ${k === todayIdx ? 'today-d' : ''}" data-h="${i}" data-d="${k}" aria-label="${DAYS[k]}">${DAYS[k]}</button>`).join('')}</div></div>
+      <button class="del" data-del="${i}" aria-label="Eliminar">×</button></div>`).join('');
+  const done = habits.filter(hb => hb.days[todayIdx]).length;
+  $('#today-txt').textContent = `${done}/${habits.length}`;
+  $('#today-ring').style.strokeDashoffset = 213.6 * (1 - (habits.length ? done / habits.length : 0));
+  $('#streak').textContent = Math.max(0, ...habits.map(hb => streakOf(hb.days)));
+  store.set('habits', habits);
+}
+$('#habits').onclick = e => {
+  const d = e.target.closest('[data-d]'), del = e.target.closest('[data-del]');
+  if (d) {
+    const hb = habits[d.dataset.h]; hb.days[d.dataset.d] = hb.days[d.dataset.d] ? 0 : 1;
+    renderHabits();
+    if (habits.every(x => x.days[todayIdx])) confetti();
+  }
+  if (del) { habits.splice(del.dataset.del, 1); renderHabits(); }
+};
+$('#add').onsubmit = e => {
+  e.preventDefault(); const v = $('#new-habit').value.trim(); if (!v) return;
+  habits.push({ ico: ICONS[habits.length % ICONS.length], name: v, days: [0, 0, 0, 0, 0, 0, 0] });
+  $('#new-habit').value = ''; renderHabits();
+};
+
+/* Sonidos generados con Web Audio */
+let ac, sleepTimer;
+const SOUNDS = [
+  { id: 'rain', emo: '🌧️', name: 'Lluvia', desc: 'Suave y constante' },
+  { id: 'ocean', emo: '🌊', name: 'Olas', desc: 'Mar en calma' },
+  { id: 'wind', emo: '🍃', name: 'Viento', desc: 'Bosque profundo' },
+  { id: 'fire', emo: '🔥', name: 'Fogata', desc: 'Crepitar cálido' }
+];
+const nodes = {};
+function noiseBuffer(type) {
+  const len = ac.sampleRate * 4, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < len; i++) {
+    const w = Math.random() * 2 - 1;
+    if (type === 'brown') { last = (last + .02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w;
+  }
+  return buf;
+}
+function startSound(id, vol) {
+  ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+  const gain = ac.createGain(); gain.gain.value = 0; gain.connect(ac.destination);
+  const src = ac.createBufferSource(); src.loop = true;
+  const filter = ac.createBiquadFilter();
+  const extra = [];
+  if (id === 'rain') { src.buffer = noiseBuffer('white'); filter.type = 'lowpass'; filter.frequency.value = 1600; }
+  if (id === 'wind') { src.buffer = noiseBuffer('brown'); filter.type = 'lowpass'; filter.frequency.value = 500; }
+  if (id === 'ocean' || id === 'fire') {
+    src.buffer = noiseBuffer(id === 'ocean' ? 'brown' : 'white');
+    filter.type = id === 'ocean' ? 'lowpass' : 'bandpass'; filter.frequency.value = id === 'ocean' ? 800 : 2500;
+  }
+  src.connect(filter);
+  if (id === 'ocean') {
+    const amp = ac.createGain(); amp.gain.value = .6;
+    const lfo = ac.createOscillator(), lfoGain = ac.createGain();
+    lfo.frequency.value = .12; lfoGain.gain.value = .45; lfo.connect(lfoGain); lfoGain.connect(amp.gain); lfo.start();
+    filter.connect(amp); amp.connect(gain); extra.push(lfo);
+  } else if (id === 'fire') {
+    const amp = ac.createGain(); amp.gain.value = 0; filter.connect(amp); amp.connect(gain);
+    const crackle = () => { if (!nodes.fire) return; const t = ac.currentTime; amp.gain.setValueAtTime(Math.random() * .9 + .1, t); amp.gain.exponentialRampToValueAtTime(.001, t + .04 + Math.random() * .08); nodes.fire.to = setTimeout(crackle, 40 + Math.random() * 220); };
+    setTimeout(crackle, 10);
+  } else filter.connect(gain);
+  src.start();
+  gain.gain.linearRampToValueAtTime(vol, ac.currentTime + 1);
+  nodes[id] = { src, gain, extra };
+}
+function stopSound(id) {
+  const n = nodes[id]; if (!n) return;
+  clearTimeout(n.to); delete nodes[id];
+  n.gain.gain.linearRampToValueAtTime(0, ac.currentTime + .6);
+  setTimeout(() => { n.src.stop(); n.extra.forEach(x => x.stop()); }, 700);
+}
+$('#sounds').innerHTML = SOUNDS.map(s => `
+  <div class="sound" data-s="${s.id}" role="button" tabindex="0"><span class="eq"><i></i><i></i><i></i></span><span class="emo">${s.emo}</span><b>${s.name}</b><small>${s.desc}</small>
+  <input type="range" min="0" max="1" step=".05" value=".5" aria-label="Volumen ${s.name}"></div>`).join('');
+$$('.sound').forEach(card => {
+  const id = card.dataset.s, range = card.querySelector('input');
+  const toggle = () => { if (nodes[id]) { stopSound(id); card.classList.remove('on'); } else { startSound(id, +range.value * .5); card.classList.add('on'); } };
+  card.onclick = e => { if (e.target !== range) toggle(); };
+  card.onkeydown = e => { if (e.key === 'Enter') toggle(); };
+  range.oninput = () => { if (nodes[id]) nodes[id].gain.gain.setTargetAtTime(+range.value * .5, ac.currentTime, .1); };
+});
+$$('#timers button').forEach(b => b.onclick = () => {
+  $$('#timers button').forEach(x => x.classList.toggle('on', x === b));
+  clearTimeout(sleepTimer);
+  const m = +b.dataset.t;
+  if (m) sleepTimer = setTimeout(() => { Object.keys(nodes).forEach(stopSound); $$('.sound').forEach(c => c.classList.remove('on')); }, m * 60000);
+});
+
+/* Confeti */
+function confetti() {
+  const c = $('#confetti'), ctx = c.getContext('2d');
+  c.width = c.offsetWidth; c.height = c.offsetHeight;
+  const ps = Array.from({ length: 90 }, () => ({ x: c.width / 2, y: c.height / 2, vx: (Math.random() - .5) * 10, vy: -Math.random() * 10 - 3, s: Math.random() * 6 + 3, c: ['#bef264', '#2dd4bf', '#fb923c', '#fff'][Math.floor(Math.random() * 4)] }));
+  let f = 0;
+  const loop = () => { ctx.clearRect(0, 0, c.width, c.height); ps.forEach(p => { p.vy += .3; p.x += p.vx; p.y += p.vy; ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.s, p.s); }); if (++f < 120) requestAnimationFrame(loop); else ctx.clearRect(0, 0, c.width, c.height); };
+  loop();
+}
+
+renderHabits(); renderMinutes();
+</script>
+</body>
+</html>
