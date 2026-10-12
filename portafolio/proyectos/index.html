@@ -122,6 +122,7 @@
         <div class="tags" id="m-stack" style="margin-bottom:30px"></div>
         <div class="m-actions">
           <a href="#" class="btn btn-primary" id="m-demo">Ver demo en vivo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="#" class="btn btn-ghost" id="m-code" target="_blank" rel="noopener">Ver código</a>
           
         </div>
         <div class="m-nav">
@@ -229,6 +230,7 @@
       $('#m-year').textContent = p.year;
       $('#m-metrics').innerHTML = p.metrics.map(([v, l]) => `<div class="m-metric"><b class="grad">${v}</b><span>${l}</span></div>`).join('');
       $('#m-demo').href = p.demo;
+      $('#m-code').href = p.code;
       $('#m-stack').innerHTML = p.stack.map(s => `<span class="tag">${s}</span>`).join('');
       panel.scrollTop = 0;
     };

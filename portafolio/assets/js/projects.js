@@ -119,7 +119,10 @@ window.PROJECTS = [
 ];
 
 /* Cada proyecto tiene una demo funcional en /demos/<id>/ */
-window.PROJECTS.forEach(p => { p.demo = `../demos/${p.id}/index.html`; });
+window.PROJECTS.forEach(p => {
+  p.demo = `../demos/${p.id}/index.html`;
+  p.code = `https://github.com/backyardignas/backyardignas.github.io/tree/main/portafolio/demos/${p.id}`;
+});
 
 window.ProjectUI = (() => {
   const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>';
